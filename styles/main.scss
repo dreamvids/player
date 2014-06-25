@@ -1,0 +1,39 @@
+
+/**
+ * main.scss
+ *
+ * MAIN STYLESHEET
+ */
+
+
+/* MIXINS
+   ----------------------------- */
+
+@import "mixins/border-radius";
+@import "mixins/box-shadow";
+@import "mixins/box-sizing";
+@import "mixins/prefix";
+@import "mixins/transition";
+@import "mixins/user-select";
+
+/* VARIABLES
+   ----------------------------- */
+
+@import "variables/colors";
+@import "variables/sizes";
+@import "variables/others";
+
+/* BASE
+   ----------------------------- */
+
+@import "base/player";
+
+/* COMPOMENTS
+   ----------------------------- */
+
+	@import "compoments/controls/controls";
+	@import "compoments/controls/play-pause";
+	@import "compoments/controls/settings";
+	
+	@import "compoments/progress-bar/progress-bar";
+	@import "compoments/progress-bar/viewed";

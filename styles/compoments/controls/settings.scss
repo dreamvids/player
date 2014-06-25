@@ -1,0 +1,18 @@
+
+/* SETTINGS
+   ============================= */
+
+.player .controls .settings {
+
+	position: absolute;
+	top: ($controls-height - $icon-size) / 2;
+	right: ($controls-height - $icon-size) / 2;
+
+	width: $icon-size;
+	height: $icon-size;
+
+	background: url(../assets/images/player/settings.png);
+	background-size: $icon-size $icon-size;
+	cursor: pointer;
+
+}

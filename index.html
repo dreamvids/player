@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <title>DP dev WorkFlow</title>
+
+        <link rel="stylesheet" href="bin/dreamplayer.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <style>
+
+            html,
+            body {
+                
+                margin: 0;
+                padding: 0;
+
+            }
+
+            header,
+            .sub-header {
+
+                display: block;
+                width: 100%;
+    
+            }
+
+            header {
+    
+                height: 60px;
+
+                background: #40a6e0;
+
+            }
+
+            .sub-header {
+    
+                height: 36px;
+                margin-bottom: 10px;
+
+                background: #f0f0f0;
+
+            }
+
+            .content {
+
+                display: block;
+                width: 100%;
+                max-width: 1000px;
+                margin: auto;
+
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <header></header>
+        <div class="sub-header"></div>
+
+        <div class="content">
+            
+            <div id="player"></div>
+
+        </div>
+
+        <script src="bin/dreamplayer.js"></script>
+
+        <script>
+
+            var player = new DreamPlayer({
+
+                debug: true,
+                poster: "http://62.4.9.23/uploads/16/QUFEYa.png",
+                cible: document.getElementById("player"),
+
+                sources: [
+
+                    {
+
+                        format: 360,
+                        mp4: "http://62.4.9.23/uploads/16/QUFEYa.mp4_640x360p.mp4",
+                        webm: "http://62.4.9.23/uploads/16/QUFEYa.mp4_640x360p.webm"
+
+                    },
+
+                    {
+
+                        format: 720,
+                        mp4:"http://62.4.9.23/uploads/16/QUFEYa.mp4_1280x720p.mp4",
+                        webm:"http://62.4.9.23/uploads/16/QUFEYa.mp4_1280x720p.webm"
+
+                    }
+
+                ]
+
+            });
+        
+        </script>
+
+    </body>
+
+</html>

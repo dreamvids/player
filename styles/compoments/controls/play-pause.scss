@@ -1,0 +1,24 @@
+
+/* PLAY PAUSE
+   ============================= */
+
+.player .controls .play-pause {
+
+	position: absolute;
+	top: ($controls-height - $icon-size) / 2;
+	left: ($controls-height - $icon-size) / 2;
+
+	width: $icon-size;
+	height: $icon-size;
+
+	background: url(../assets/images/player/play-pause.png);
+	background-size: $icon-size * 2 $icon-size;
+	cursor: pointer;
+
+}
+
+.player.playing .controls .play-pause {
+
+	background-position: $icon-size 0;
+
+}
