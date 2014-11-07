@@ -30,6 +30,7 @@ DreamPlayer.prototype.setPlayPause = function() {
 		player.removeClass("playing");
 
 	});
+	
 };
 
 DreamPlayer.prototype.play = function() {

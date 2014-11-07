@@ -24,6 +24,7 @@ var DreamPlayer = function(settings) {
 	this.loadSources();
 
 	this.setPlayPause();
+	this.setProgressBar();
 
 	this.setControls();
 
@@ -66,9 +67,10 @@ DreamPlayer.prototype.setTimeoutHideControls = function() {
 
 DreamPlayer.prototype.showControls = function() {
 
-	if (this.elements.controls.className.search("show") <= 0) {
+	if ((" " + this.elements.controls.className + " ").search(" show ") <= 0) {
 
 		this.elements.controls.className += " show";
+		this.elements.player.className += " show-settings";
 		this.setTimeoutHideControls();
 
 	}
@@ -77,9 +79,10 @@ DreamPlayer.prototype.showControls = function() {
 
 DreamPlayer.prototype.hideControls = function() {
 
-	if (this.elements.controls.className.search("show") >= 0) {
+	if ((" " + this.elements.controls.className + " ").search(" show ") >= 0) {
 
-		this.elements.controls.className = this.elements.controls.className.replace(" show", "");
+		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
+		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");
 
 	}
 
@@ -162,43 +165,59 @@ DreamPlayer.prototype.insert = function() {
 		
 	player.appendChild(video);
 
+	var controls = document.createElement("div");
+	controls.className = "controls";
+	elements["controls"] = controls;
+
+		var playPause = document.createElement("div");
+		playPause.className = "play-pause";
+		elements["playPause"] = playPause;
+
+	player.appendChild(playPause);
+
+		var settings = document.createElement("div");
+		settings.className = "settings";
+		elements["settings"] = settings;
+
+	player.appendChild(settings);
+
 		var controls = document.createElement("div");
 		controls.className = "controls";
 		elements["controls"] = controls;
 
-			var playPause = document.createElement("div");
-			playPause.className = "play-pause";
-			elements["playPause"] = playPause;
-
-		controls.appendChild(playPause);
-
-			var settings = document.createElement("div");
-			settings.className = "settings";
-			elements["settings"] = settings;
-
-		controls.appendChild(settings);
+		var controlsWrap = document.createElement("div");
+		controlsWrap.className = "controls__wrap";
+		controls.appendChild(controlsWrap);
 		
 			var progressBar = document.createElement("div");
 			progressBar.className = "progress-bar";
 
+			var progressBarWrap = document.createElement("div");
+			progressBarWrap.className = "progress-bar__wrap";
+			progressBar.appendChild(progressBarWrap);
+
 				var progressBarViewed = document.createElement("div");
-				progressBarViewed.className = "viewed";
+				progressBarViewed.className = "progress-bar__viewed";
+				progressBarViewed.style.width = "0%";
 			
 				var progressBarCurrent = document.createElement("div");
-				progressBarCurrent.className = "current";
+				progressBarCurrent.className = "progress-bar__current";
+				progressBarCurrent.style.left = "0%";
 			
 				var progressBarBuffer = document.createElement("div");
-				progressBarBuffer.className = "buffer";
+				progressBarBuffer.className = "progress-bar__buffer";
+				progressBarBuffer.style.width = "0%";
 
-			progressBar.appendChild(progressBarViewed);
-			progressBar.appendChild(progressBarCurrent);
-			progressBar.appendChild(progressBarBuffer);
+			progressBarWrap.appendChild(progressBarViewed);
+			progressBarWrap.appendChild(progressBarCurrent);
+			progressBarWrap.appendChild(progressBarBuffer);
+
 			elements["progressBar"] = {};
 			elements["progressBar"]["viewed"] = progressBarViewed;
 			elements["progressBar"]["current"] = progressBarCurrent;
 			elements["progressBar"]["buffer"] = progressBarBuffer;
 
-		controls.appendChild(progressBar);
+		controlsWrap.appendChild(progressBar);
 
 	player.appendChild(controls);
 
@@ -218,6 +237,8 @@ DreamPlayer.prototype.insert = function() {
 
 DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
+	cible = typeof cible === "string" ? this.elements[cible] : cible;
+
 	for (var i = 0; i < this.events.length; i++) {
 
 		if (this.events[i].name.toLowerCase() == name.toLowerCase()) {
@@ -235,17 +256,17 @@ DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
 				push.events.push(this.events[i].events[e]);
 
-				this.elements[cible].addEventListener(this.events[i].events[e], this.onEvent, false);
+				cible.addEventListener(this.events[i].events[e], this.onEvent, false);
 
 			}
 
-			if (!this.elements[cible].eventsListeners) {
+			if (!cible.eventsListeners) {
 
-				this.elements[cible].eventsListeners = [];
+				cible.eventsListeners = [];
 
 			}
 
-			this.elements[cible].eventsListeners.push(push);
+			cible.eventsListeners.push(push);
 
 			if (this.settings.debug) {
 
@@ -457,6 +478,7 @@ DreamPlayer.prototype.setPlayPause = function() {
 		player.removeClass("playing");
 
 	});
+	
 };
 
 DreamPlayer.prototype.play = function() {
@@ -485,6 +507,45 @@ DreamPlayer.prototype.tooglePlayPause = function() {
 
 	}
 	
+};
+
+/**
+ *	interactions/progressBar.js
+ *
+ *	Intéractions de la barre de progression.
+ */
+
+DreamPlayer.prototype.bufferUpdate = function() {
+
+	var video = this.elements.video;
+
+	if (video.buffered && video.buffered.length > 0) {
+
+		this.elements.progressBar.buffer.style.width = video.buffered.end(video.buffered.length - 1) / video.duration * 100 + "%";
+
+	}
+
+}
+
+DreamPlayer.prototype.setProgressBar = function() {
+
+	this.addEvent("timeupdate", "video", function(event, player) {
+
+		var percent = player.elements.video.currentTime / player.elements.video.duration * 100 + "%";
+
+		player.elements.progressBar.viewed.style.width = percent;
+		player.elements.progressBar.current.style.width = percent;
+
+		player.bufferUpdate();
+
+	});
+
+	this.addEvent("loadedmetadata", "video", function(event, player) {
+
+		player.bufferUpdate();
+
+	});
+
 };
 
 /**
@@ -567,10 +628,6 @@ DreamPlayer.prototype.loadSources = function() {
 		selection = this.settings.sources.length - 1;
 
 	}
-
-	//
-		selection = 0;
-	//
 
 	this.elements.srcMp4.src = this.settings.sources[selection].mp4;
 	this.elements.srcWebm.src = this.settings.sources[selection].webm;

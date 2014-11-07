@@ -2,17 +2,31 @@
 /* SETTINGS
    ============================= */
 
-.player .controls .settings {
+.player .settings {
 
 	position: absolute;
-	top: ($controls-height - $icon-size) / 2;
-	right: ($controls-height - $icon-size) / 2;
+	top: ($controls-height - $icon-size) / 2 - $icon-padding;
+	right: ($controls-height - $icon-size) / 2 - $icon-padding;
 
 	width: $icon-size;
 	height: $icon-size;
+	padding: $icon-padding $icon-padding;
 
 	background: url(../assets/images/player/settings.png);
 	background-size: $icon-size $icon-size;
+	background-position: $icon-padding $icon-padding;
+	background-repeat: no-repeat;
 	cursor: pointer;
+	opacity: 0;
+
+	@include transition(opacity 0.8s);
+
+}
+
+.player.show-settings .settings {
+
+	opacity: 1;
+
+	@include transition(opacity 0.2s);
 
 }

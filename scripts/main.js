@@ -24,6 +24,7 @@ var DreamPlayer = function(settings) {
 	this.loadSources();
 
 	this.setPlayPause();
+	this.setProgressBar();
 
 	this.setControls();
 

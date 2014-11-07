@@ -2,23 +2,38 @@
 /* PLAY PAUSE
    ============================= */
 
-.player .controls .play-pause {
+.player .play-pause {
 
 	position: absolute;
-	top: ($controls-height - $icon-size) / 2;
-	left: ($controls-height - $icon-size) / 2;
+	top: 50%;
+	left: 50%;
 
-	width: $icon-size;
-	height: $icon-size;
+	width: $icon-size--big;
+	height: $icon-size--big;
+	margin-left: -$icon-size--big / 2;
+	margin-top: -$icon-size--big / 2;
 
 	background: url(../assets/images/player/play-pause.png);
-	background-size: $icon-size * 2 $icon-size;
+	background-size: $icon-size--big * 2 $icon-size--big;
+	background-position: 0 0;
+	background-repeat: no-repeat;
 	cursor: pointer;
+	opacity: 0;
+
+	@include transition(opacity 0.8s);
 
 }
 
-.player.playing .controls .play-pause {
+.player.show-settings .play-pause {
 
-	background-position: $icon-size 0;
+	opacity: 1;
+
+	@include transition(opacity 0.2s);
+
+}
+
+.player.playing .play-pause {
+
+	background-position: -$icon-size--big 0;
 
 }

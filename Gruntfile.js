@@ -50,29 +50,56 @@ module.exports = function(grunt) {
 
 		},
 
+		"concurrent": {
+
+			auto: ["auto-scripts", "auto-style"],
+
+			options: {
+
+				logConcurrentOutput: true
+
+			}
+
+		},
+
 		"watch": {
 
-			dist: {
+			scripts: {
 
-  				files: [
+				files: [
 
-  					"Gruntfile.js",
-  					"scripts/**/*.js",
-  					"styles/**/*.scss"
+					"scripts/**/*.js"
 
-  				],
+				],
 
-  				tasks: [
+				tasks: [
 
-  					"scripts",
-  					"styles"
+					"scripts"
 
-  				],
+				],
 
-  				options: { event: [ "all" ], }
+				options: { event: [ "all" ], }
 
-  			}
-  			
+			},
+
+			style: {
+
+				files: [
+
+					"styles/**/*.scss"
+
+				],
+
+				tasks: [
+
+					"style"
+
+				],
+
+				options: { event: [ "all" ], }
+
+			}
+			
 		}
 
 	});
@@ -80,16 +107,21 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 
-	grunt.loadNpmTasks("grunt-contrib-sass");
+	grunt.loadNpmTasks("grunt-sass");
 	grunt.loadNpmTasks("grunt-contrib-cssmin");
 
 	grunt.loadNpmTasks("grunt-contrib-watch");
+	grunt.loadNpmTasks("grunt-concurrent");
 
-	grunt.registerTask("default", ["scripts", "styles"]);
+	grunt.registerTask("default", ["scripts", "style"]);
 
 	grunt.registerTask("scripts", ["concat:dist", "uglify:dist"]);
-	grunt.registerTask("styles", ["sass:dist", "cssmin:dist"]);
+	grunt.registerTask("style", ["sass:dist", "cssmin:dist"]);
 
-	grunt.registerTask("auto", ["watch:dist"]);
+	grunt.registerTask("auto-scripts", ["watch:scripts"]);
+	grunt.registerTask("auto-style", ["watch:style"]);
+
+	grunt.registerTask("dev", ["concurrent:auto"]);
+	grunt.registerTask("d", ["concurrent:auto"]);
 
 }

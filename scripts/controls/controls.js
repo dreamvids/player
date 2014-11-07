@@ -36,9 +36,10 @@ DreamPlayer.prototype.setTimeoutHideControls = function() {
 
 DreamPlayer.prototype.showControls = function() {
 
-	if (this.elements.controls.className.search("show") <= 0) {
+	if ((" " + this.elements.controls.className + " ").search(" show ") <= 0) {
 
 		this.elements.controls.className += " show";
+		this.elements.player.className += " show-settings";
 		this.setTimeoutHideControls();
 
 	}
@@ -47,9 +48,10 @@ DreamPlayer.prototype.showControls = function() {
 
 DreamPlayer.prototype.hideControls = function() {
 
-	if (this.elements.controls.className.search("show") >= 0) {
+	if ((" " + this.elements.controls.className + " ").search(" show ") >= 0) {
 
-		this.elements.controls.className = this.elements.controls.className.replace(" show", "");
+		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
+		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");
 
 	}
 

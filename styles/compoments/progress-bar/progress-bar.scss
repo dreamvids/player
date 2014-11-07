@@ -2,17 +2,85 @@
 /* PROGRESS BAR
    ============================= */
 
-.player .controls .progress-bar {
+.player .progress-bar {
+
+	position: relative;
+	bottom: $controls-margin-bottom;
+
+	width: 100%;
+	height: 64px;
+
+	cursor: pointer;
+
+}
+
+.player .progress-bar__wrap {
 
 	position: absolute;
-	top: ($controls-height - $progress-bar-height) / 2;
-	left: ($controls-height - $icon-size) + $icon-size;
-	right: ($controls-height - $icon-size) + $icon-size;
+	bottom: 16px;
 
+	width: 100%;
 	height: $progress-bar-height;
 
-	background: rgba(255, 255, 255, 0.2);
+	background: rgba(255, 255, 255, 0.1);
 
 	@include border-radius($progress-bar-height / 2);
+	@include transition(.15s);
+
+}
+
+.player .progress-bar:hover .progress-bar__wrap {
+
+	bottom: 16px -($progress-bar-height--big - $progress-bar-height) / 2;
+
+	height: $progress-bar-height--big;
+
+	@include border-radius($progress-bar-height--big / 2);
+
+}
+
+.player .progress-bar__viewed {
+
+	position: absolute;
+	z-index: 2;
+
+	display: block;
+	height: 100%;
+
+	background: $blue;
+
+}
+
+
+.player .progress-bar__current {
+
+
+}
+
+
+.player .progress-bar__buffer {
+
+	position: absolute;
+	z-index: 1;
+
+	display: block;
+	height: 100%;
+
+	background: transparentize(white, .8);
+
+}
+
+.player .controls .progress-bar .progress-bar__viewed,
+.player .controls .progress-bar .progress-bar__buffer {
+
+	@include border-radius($progress-bar-height / 2);
+	@include transition(.15s);
+
+}
+
+.player .controls:hover .progress-bar .progress-bar__viewed,
+.player .controls:hover .progress-bar .progress-bar__buffer {
+
+	@include border-radius($progress-bar-height--big / 2);
 
 }

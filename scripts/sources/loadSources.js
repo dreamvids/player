@@ -25,10 +25,6 @@ DreamPlayer.prototype.loadSources = function() {
 
 	}
 
-	//
-		selection = 0;
-	//
-
 	this.elements.srcMp4.src = this.settings.sources[selection].mp4;
 	this.elements.srcWebm.src = this.settings.sources[selection].webm;
 

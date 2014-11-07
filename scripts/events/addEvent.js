@@ -7,6 +7,8 @@
 
 DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
+	cible = typeof cible === "string" ? this.elements[cible] : cible;
+
 	for (var i = 0; i < this.events.length; i++) {
 
 		if (this.events[i].name.toLowerCase() == name.toLowerCase()) {
@@ -24,17 +26,17 @@ DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
 				push.events.push(this.events[i].events[e]);
 
-				this.elements[cible].addEventListener(this.events[i].events[e], this.onEvent, false);
+				cible.addEventListener(this.events[i].events[e], this.onEvent, false);
 
 			}
 
-			if (!this.elements[cible].eventsListeners) {
+			if (!cible.eventsListeners) {
 
-				this.elements[cible].eventsListeners = [];
+				cible.eventsListeners = [];
 
 			}
 
-			this.elements[cible].eventsListeners.push(push);
+			cible.eventsListeners.push(push);
 
 			if (this.settings.debug) {
 

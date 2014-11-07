@@ -34,43 +34,59 @@ DreamPlayer.prototype.insert = function() {
 		
 	player.appendChild(video);
 
+	var controls = document.createElement("div");
+	controls.className = "controls";
+	elements["controls"] = controls;
+
+		var playPause = document.createElement("div");
+		playPause.className = "play-pause";
+		elements["playPause"] = playPause;
+
+	player.appendChild(playPause);
+
+		var settings = document.createElement("div");
+		settings.className = "settings";
+		elements["settings"] = settings;
+
+	player.appendChild(settings);
+
 		var controls = document.createElement("div");
 		controls.className = "controls";
 		elements["controls"] = controls;
 
-			var playPause = document.createElement("div");
-			playPause.className = "play-pause";
-			elements["playPause"] = playPause;
-
-		controls.appendChild(playPause);
-
-			var settings = document.createElement("div");
-			settings.className = "settings";
-			elements["settings"] = settings;
-
-		controls.appendChild(settings);
+		var controlsWrap = document.createElement("div");
+		controlsWrap.className = "controls__wrap";
+		controls.appendChild(controlsWrap);
 		
 			var progressBar = document.createElement("div");
 			progressBar.className = "progress-bar";
 
+			var progressBarWrap = document.createElement("div");
+			progressBarWrap.className = "progress-bar__wrap";
+			progressBar.appendChild(progressBarWrap);
+
 				var progressBarViewed = document.createElement("div");
-				progressBarViewed.className = "viewed";
+				progressBarViewed.className = "progress-bar__viewed";
+				progressBarViewed.style.width = "0%";
 			
 				var progressBarCurrent = document.createElement("div");
-				progressBarCurrent.className = "current";
+				progressBarCurrent.className = "progress-bar__current";
+				progressBarCurrent.style.left = "0%";
 			
 				var progressBarBuffer = document.createElement("div");
-				progressBarBuffer.className = "buffer";
+				progressBarBuffer.className = "progress-bar__buffer";
+				progressBarBuffer.style.width = "0%";
 
-			progressBar.appendChild(progressBarViewed);
-			progressBar.appendChild(progressBarCurrent);
-			progressBar.appendChild(progressBarBuffer);
+			progressBarWrap.appendChild(progressBarViewed);
+			progressBarWrap.appendChild(progressBarCurrent);
+			progressBarWrap.appendChild(progressBarBuffer);
+
 			elements["progressBar"] = {};
 			elements["progressBar"]["viewed"] = progressBarViewed;
 			elements["progressBar"]["current"] = progressBarCurrent;
 			elements["progressBar"]["buffer"] = progressBarBuffer;
 
-		controls.appendChild(progressBar);
+		controlsWrap.appendChild(progressBar);
 
 	player.appendChild(controls);
 

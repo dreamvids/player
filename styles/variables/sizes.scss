@@ -3,9 +3,13 @@
    ============================= */
 
 
-$controls-margins: 0;
-$controls-height: 100px;
+$controls-margins: 48px;
+$controls-margin-bottom: 42px;
+$controls-height: 92px;
 
 $icon-size: 28px;
+$icon-size--big: 64px;
+$icon-padding: 18px;
 
-$progress-bar-height: 12px;
+$progress-bar-height: 4px;
+$progress-bar-height--big: 12px;
