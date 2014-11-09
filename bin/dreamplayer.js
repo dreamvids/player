@@ -5,6 +5,8 @@
  *	Fichier JavaScript principal.
  */
 
+var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
 var DreamPlayer = function(settings) {
 
 	this.settings = DreamPlayer.settings(settings);
@@ -25,6 +27,7 @@ var DreamPlayer = function(settings) {
 
 	this.setPlayPause();
 	this.setProgressBar();
+	this.setSpinner();
 
 	this.setControls();
 
@@ -89,9 +92,9 @@ DreamPlayer.prototype.hideControls = function() {
 };
 
 /**
- *	element/classes.js
+ * element/classes.js
  *
- *	Gestion des classes d'élements.
+ * Gestion des classes d'élements.
  */
 
 DreamPlayer.prototype.toogleClass = function(name) {
@@ -125,6 +128,26 @@ DreamPlayer.prototype.removeClass = function(name) {
 	while ((" " + this.elements.player.className + " ").search(" " + name + " ") >= 0) {
 
 		this.elements.player.className = this.elements.player.className.replace(name, "");
+
+	}
+
+}
+
+DreamPlayer.addClass = function(element, name) {
+
+	if ((" " + element.className + " ").search(" " + name + " ") < 0) {
+
+		element.className += " " + name;
+
+	}
+
+}
+
+DreamPlayer.removeClass = function(element, name) {
+
+	while ((" " + element.className + " ").search(" " + name + " ") >= 0) {
+
+		element.className = element.className.replace(name, "");
 
 	}
 
@@ -203,18 +226,35 @@ DreamPlayer.prototype.insert = function() {
 				var progressBarCurrent = document.createElement("div");
 				progressBarCurrent.className = "progress-bar__current";
 				progressBarCurrent.style.left = "0%";
-			
+
+				var progressBarSpinner = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+				progressBarSpinner.setAttribute("class", "progress-bar__spinner");
+				progressBarSpinner.setAttribute("viewBox", "0 0 32 32");
+				progressBarSpinner.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+
+					var progressBarSpinnerCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+					progressBarSpinnerCircle.setAttribute("fill", "none");
+					progressBarSpinnerCircle.setAttribute("stroke", "white");
+					progressBarSpinnerCircle.setAttribute("stroke-width", "3");
+					progressBarSpinnerCircle.setAttribute("stroke-linecap", "round");
+					progressBarSpinnerCircle.setAttribute("cx", "16");
+					progressBarSpinnerCircle.setAttribute("cy", "16");
+					progressBarSpinnerCircle.setAttribute("r", "14");
+					progressBarSpinner.appendChild(progressBarSpinnerCircle);
+
 				var progressBarBuffer = document.createElement("div");
 				progressBarBuffer.className = "progress-bar__buffer";
 				progressBarBuffer.style.width = "0%";
 
 			progressBarWrap.appendChild(progressBarViewed);
 			progressBarWrap.appendChild(progressBarCurrent);
+			progressBarWrap.appendChild(progressBarSpinner);
 			progressBarWrap.appendChild(progressBarBuffer);
 
-			elements["progressBar"] = {};
+			elements["progressBar"] = progressBar;
 			elements["progressBar"]["viewed"] = progressBarViewed;
 			elements["progressBar"]["current"] = progressBarCurrent;
+			elements["progressBar"]["spinner"] = progressBarSpinner;
 			elements["progressBar"]["buffer"] = progressBarBuffer;
 
 		controlsWrap.appendChild(progressBar);
@@ -228,6 +268,34 @@ DreamPlayer.prototype.insert = function() {
 	return elements;
 
 };
+
+/**
+ *	element/offsets.js
+ *
+ *	Gestion des classes d'élements.
+ */
+
+DreamPlayer.getOffsets = function(element) {
+
+	var x = 0,
+		y = 0;
+
+	while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
+
+		x += element.offsetLeft - element.scrollLeft;
+		y += element.offsetTop - element.scrollTop;
+		
+		element = element.offsetParent;
+
+	}
+
+	return {
+
+		top: y, left: x
+
+	};
+
+}
 
 /**
  *	events/addEvent.js
@@ -268,12 +336,6 @@ DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
 			cible.eventsListeners.push(push);
 
-			if (this.settings.debug) {
-
-				console.info('added event "' + name + '"');
-
-			}
-
 		}
 
 	}
@@ -288,7 +350,7 @@ DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
 DreamPlayer.prototype.onEvent = function(event) {
 
-	if (this.eventsListeners.length) {
+	if (this.eventsListeners.length && typeof event !== "undefined") {
 
 		for (var i = 0; i < this.eventsListeners.length; i++) {
 
@@ -527,14 +589,45 @@ DreamPlayer.prototype.bufferUpdate = function() {
 
 }
 
+DreamPlayer.prototype.timeTo = function(time) {
+
+	var video = this.elements.video;
+
+	video.currentTime = time;
+
+}
+
+DreamPlayer.prototype.changeTime = function(event) {
+
+	var progressBar = this.elements.progressBar,
+		width = progressBar.offsetWidth;
+
+	var x = Math.max(Math.min(event.pageX - DreamPlayer.getOffsets(progressBar).left, width), 0);
+
+	var percent = x / width * 100,
+		time = percent / 100 * this.elements.video.duration;
+
+	if (!isNaN(time)) {
+
+		this.elements.progressBar.viewed.style.width = percent + "%";
+		this.elements.progressBar.current.style.left = percent + "%";
+		this.elements.progressBar.spinner.style.left = percent + "%";
+
+		this.timeTo(time);
+
+	}
+
+}
+
 DreamPlayer.prototype.setProgressBar = function() {
 
 	this.addEvent("timeupdate", "video", function(event, player) {
 
-		var percent = player.elements.video.currentTime / player.elements.video.duration * 100 + "%";
+		var percent = player.elements.video.currentTime / player.elements.video.duration * 100;
 
-		player.elements.progressBar.viewed.style.width = percent;
-		player.elements.progressBar.current.style.width = percent;
+		player.elements.progressBar.viewed.style.width = percent + "%";
+		player.elements.progressBar.current.style.left = percent + "%";
+		player.elements.progressBar.spinner.style.left = percent + "%";
 
 		player.bufferUpdate();
 
@@ -545,6 +638,94 @@ DreamPlayer.prototype.setProgressBar = function() {
 		player.bufferUpdate();
 
 	});
+
+
+
+	this.addEvent("mousedown", "progressBar", function(event, player) {
+
+		player.progressBarClicking = true;
+
+		DreamPlayer.addClass(player.elements.progressBar, "progress-bar--clicking");
+
+		player.changeTime.call(player, event);
+
+	});
+
+	this.addEvent("mouseup", "progressBar", function(event, player) {
+
+		player.progressBarClicking = false;
+
+		DreamPlayer.removeClass(player.elements.progressBar, "progress-bar--clicking");
+
+		player.changeTime.call(player, event);
+
+	});
+
+	this.addEvent("mousemove", "player", function(event, player) {
+
+		if (player.progressBarClicking) {
+
+			player.changeTime.call(player, event);
+
+		}
+
+	});
+
+};
+
+/**
+ *	interactions/spinner.js
+ *
+ *	Spinner loader.
+ */
+
+DreamPlayer.prototype.setSpinner = function() {
+
+	if (isFirefox) {
+
+		this.elements.progressBar.spinner.parentNode.removeChild(this.elements.progressBar.spinner);
+
+		return false;
+
+	}
+
+	this.elements.progressBar.spinner.style.opacity = 1;
+
+	this.elements.video.addEventListener("waiting", function(player) {
+	
+		return function() {
+
+			player.elements.progressBar.spinner.style.opacity = 1;
+	
+		};
+	
+	}(this), false);
+
+	this.elements.video.addEventListener("seeking", function(player) {
+	
+		return function() {
+
+			player.elements.progressBar.spinner.style.opacity = 1;
+	
+		};
+	
+	}(this), false);
+
+	this.addEvent("play", "video", function(event, player) {
+
+		player.elements.progressBar.spinner.style.opacity = 0;
+
+	});
+
+	this.elements.video.addEventListener("seeked", function(player) {
+	
+		return function() {
+
+			player.elements.progressBar.spinner.style.opacity = 0;
+	
+		};
+	
+	}(this), false);
 
 };
 

@@ -29,15 +29,6 @@
 
 }
 
-.player .progress-bar:hover .progress-bar__wrap {
-
-	bottom: 16px -($progress-bar-height--big - $progress-bar-height) / 2;
-
-	height: $progress-bar-height--big;
-
-	@include border-radius($progress-bar-height--big / 2);
-
-}
 
 .player .progress-bar__viewed {
 
@@ -54,6 +45,29 @@
 
 .player .progress-bar__current {
 
+	position: absolute;
+	top: 2px;
+	z-index: 2;
+
+	display: block;
+	width: $progress-bar__current-size;
+	height: $progress-bar__current-size;
+	margin-top: -($progress-bar__current-size / 2);
+	margin-left: -($progress-bar__current-size / 2);
+
+	background: $blue;
+
+	@include border-radius;
+	@include transition(.15s);
+
+}
+
+.player .progress-bar:hover .progress-bar__current {
+
+	width: $progress-bar__current-size--big;
+	height: $progress-bar__current-size--big;
+	margin-top: -($progress-bar__current-size--big / 2);
+	margin-left: -($progress-bar__current-size--big / 2);
 
 }
 
@@ -78,9 +92,12 @@
 
 }
 
-.player .controls:hover .progress-bar .progress-bar__viewed,
-.player .controls:hover .progress-bar .progress-bar__buffer {
+.player .progress-bar--clicking .progress-bar__viewed,
+.player .progress-bar--clicking .progress-bar__current,
+.player .progress-bar--clicking .progress-bar__spinner {
 
-	@include border-radius($progress-bar-height--big / 2);
+	-webkit-transition: 0!important;
+	   -moz-transition: 0!important;
+			transition: 0!important;
 
 }

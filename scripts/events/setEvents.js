@@ -7,7 +7,7 @@
 
 DreamPlayer.prototype.onEvent = function(event) {
 
-	if (this.eventsListeners.length) {
+	if (this.eventsListeners.length && typeof event !== "undefined") {
 
 		for (var i = 0; i < this.eventsListeners.length; i++) {
 

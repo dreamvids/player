@@ -38,12 +38,6 @@ DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
 			cible.eventsListeners.push(push);
 
-			if (this.settings.debug) {
-
-				console.info('added event "' + name + '"');
-
-			}
-
 		}
 
 	}

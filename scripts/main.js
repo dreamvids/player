@@ -5,6 +5,8 @@
  *	Fichier JavaScript principal.
  */
 
+var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
 var DreamPlayer = function(settings) {
 
 	this.settings = DreamPlayer.settings(settings);
@@ -25,6 +27,7 @@ var DreamPlayer = function(settings) {
 
 	this.setPlayPause();
 	this.setProgressBar();
+	this.setSpinner();
 
 	this.setControls();
 

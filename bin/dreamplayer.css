@@ -35,7 +35,10 @@
   width: 100%;
   margin: 0;
   padding: 0;
-  background: black; }
+  background: black;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none; }
   .player video {
     width: 100%;
     height: auto; }
@@ -147,19 +150,35 @@
   -moz-transition: 0.15s;
   transition: 0.15s; }
 
-.player .progress-bar:hover .progress-bar__wrap {
-  bottom: 12px;
-  height: 12px;
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px; }
-
 .player .progress-bar__viewed {
   position: absolute;
   z-index: 2;
   display: block;
   height: 100%;
   background: #40a6e0; }
+
+.player .progress-bar__current {
+  position: absolute;
+  top: 2px;
+  z-index: 2;
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin-top: -5px;
+  margin-left: -5px;
+  background: #40a6e0;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-transition: 0.15s;
+  -moz-transition: 0.15s;
+  transition: 0.15s; }
+
+.player .progress-bar:hover .progress-bar__current {
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  margin-left: -9px; }
 
 .player .progress-bar__buffer {
   position: absolute;
@@ -176,10 +195,126 @@
   -moz-transition: 0.15s;
   transition: 0.15s; }
 
-.player .controls:hover .progress-bar .progress-bar__viewed, .player .controls:hover .progress-bar .progress-bar__buffer {
-  -webkit-border-radius: 6px;
-  -moz-border-radius: 6px;
-  border-radius: 6px; }
+.player .progress-bar--clicking .progress-bar__viewed, .player .progress-bar--clicking .progress-bar__current, .player .progress-bar--clicking .progress-bar__spinner {
+  -webkit-transition: 0 !important;
+  -moz-transition: 0 !important;
+  transition: 0 !important; }
 
-/* PROGRESSBAR VIEWED
-   ============================= */
+/**
+ * components/progress-bar/spinner.scss
+ * 
+ * PROGRESS BAR SPINNER
+ */
+.progress-bar__spinner {
+  position: absolute;
+  top: 2px;
+  z-index: 3;
+  width: 24px;
+  height: 24px;
+  margin-left: -12px;
+  margin-top: -12px;
+  opacity: 0;
+  -webkit-animation: rotator 1.4s linear infinite;
+  -moz-animation: rotator 1.4s linear infinite;
+  animation: rotator 1.4s linear infinite;
+  -webkit-transition: 0.15s;
+  -moz-transition: 0.15s;
+  transition: 0.15s; }
+
+.player .progress-bar:hover .progress-bar__spinner {
+  width: 34px;
+  height: 34px;
+  margin-left: -17px;
+  margin-top: -17px; }
+
+.progress-bar__spinner circle {
+  stroke: #40a6e0;
+  stroke-dasharray: 120;
+  stroke-dashoffset: 0;
+  -webkit-transform-origin: center;
+  -moz-transform-origin: center;
+  transform-origin: center;
+  -webkit-animation: dash 1.4s ease-in-out infinite;
+  -moz-animation: dash 1.4s ease-in-out infinite;
+  animation: dash 1.4s ease-in-out infinite; }
+
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg); }
+
+  100% {
+    -webkit-transform: rotate(280deg);
+    -moz-transform: rotate(280deg);
+    transform: rotate(280deg); } }
+
+@-moz-keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg); }
+
+  100% {
+    -webkit-transform: rotate(280deg);
+    -moz-transform: rotate(280deg);
+    transform: rotate(280deg); } }
+
+@keyframes rotator {
+  0% {
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    transform: rotate(0deg); }
+
+  100% {
+    -webkit-transform: rotate(280deg);
+    -moz-transform: rotate(280deg);
+    transform: rotate(280deg); } }
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dashoffset: 120; }
+
+  50% {
+    stroke-dashoffset: 30;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    transform: rotate(135deg); }
+
+  100% {
+    stroke-dashoffset: 120;
+    -webkit-transform: rotate(450deg);
+    -moz-transform: rotate(450deg);
+    transform: rotate(450deg); } }
+
+@-moz-keyframes dash {
+  0% {
+    stroke-dashoffset: 120; }
+
+  50% {
+    stroke-dashoffset: 30;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    transform: rotate(135deg); }
+
+  100% {
+    stroke-dashoffset: 120;
+    -webkit-transform: rotate(450deg);
+    -moz-transform: rotate(450deg);
+    transform: rotate(450deg); } }
+
+@keyframes dash {
+  0% {
+    stroke-dashoffset: 120; }
+
+  50% {
+    stroke-dashoffset: 30;
+    -webkit-transform: rotate(135deg);
+    -moz-transform: rotate(135deg);
+    transform: rotate(135deg); }
+
+  100% {
+    stroke-dashoffset: 120;
+    -webkit-transform: rotate(450deg);
+    -moz-transform: rotate(450deg);
+    transform: rotate(450deg); } }

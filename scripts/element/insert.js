@@ -72,18 +72,35 @@ DreamPlayer.prototype.insert = function() {
 				var progressBarCurrent = document.createElement("div");
 				progressBarCurrent.className = "progress-bar__current";
 				progressBarCurrent.style.left = "0%";
-			
+
+				var progressBarSpinner = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+				progressBarSpinner.setAttribute("class", "progress-bar__spinner");
+				progressBarSpinner.setAttribute("viewBox", "0 0 32 32");
+				progressBarSpinner.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+
+					var progressBarSpinnerCircle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+					progressBarSpinnerCircle.setAttribute("fill", "none");
+					progressBarSpinnerCircle.setAttribute("stroke", "white");
+					progressBarSpinnerCircle.setAttribute("stroke-width", "3");
+					progressBarSpinnerCircle.setAttribute("stroke-linecap", "round");
+					progressBarSpinnerCircle.setAttribute("cx", "16");
+					progressBarSpinnerCircle.setAttribute("cy", "16");
+					progressBarSpinnerCircle.setAttribute("r", "14");
+					progressBarSpinner.appendChild(progressBarSpinnerCircle);
+
 				var progressBarBuffer = document.createElement("div");
 				progressBarBuffer.className = "progress-bar__buffer";
 				progressBarBuffer.style.width = "0%";
 
 			progressBarWrap.appendChild(progressBarViewed);
 			progressBarWrap.appendChild(progressBarCurrent);
+			progressBarWrap.appendChild(progressBarSpinner);
 			progressBarWrap.appendChild(progressBarBuffer);
 
-			elements["progressBar"] = {};
+			elements["progressBar"] = progressBar;
 			elements["progressBar"]["viewed"] = progressBarViewed;
 			elements["progressBar"]["current"] = progressBarCurrent;
+			elements["progressBar"]["spinner"] = progressBarSpinner;
 			elements["progressBar"]["buffer"] = progressBarBuffer;
 
 		controlsWrap.appendChild(progressBar);

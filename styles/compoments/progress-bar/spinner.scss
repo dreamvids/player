@@ -1,0 +1,138 @@
+
+/**
+ * components/progress-bar/spinner.scss
+ * 
+ * PROGRESS BAR SPINNER
+ */
+
+$progress-bar__spinner-size:      24px;
+$progress-bar__spinner-size--big: 34px;
+
+$progress-bar__spinner-offset: 120;
+$progress-bar__spinner-duration: 1.4s;
+
+.progress-bar__spinner {
+	
+	position: absolute;
+	top: 2px;
+	z-index: 3;
+
+	width: $progress-bar__spinner-size;
+	height: $progress-bar__spinner-size;
+	margin-left: -($progress-bar__spinner-size / 2);
+	margin-top: -($progress-bar__spinner-size / 2);
+
+	opacity: 0;
+
+	@include prefix(animation, rotator $progress-bar__spinner-duration linear infinite);
+	@include transition(.15s);
+
+}
+
+.player .progress-bar:hover .progress-bar__spinner {
+
+	width: $progress-bar__spinner-size--big;
+	height: $progress-bar__spinner-size--big;
+	margin-left: -($progress-bar__spinner-size--big / 2);
+	margin-top: -($progress-bar__spinner-size--big / 2);
+
+}
+
+.progress-bar__spinner circle {
+
+	stroke: $blue;
+	stroke-dasharray: $progress-bar__spinner-offset;
+	stroke-dashoffset: 0;
+
+	@include prefix(transform-origin, center);
+	@include prefix(animation, dash $progress-bar__spinner-duration ease-in-out infinite);
+
+}
+
+@-webkit-keyframes rotator {
+
+	0% { @include prefix(transform, rotate(0deg)); }
+	100% { @include prefix(transform, rotate(280deg)); }
+
+}
+
+@-moz-keyframes rotator {
+
+	0% { @include prefix(transform, rotate(0deg)); }
+	100% { @include prefix(transform, rotate(280deg)); }
+
+}
+
+@keyframes rotator {
+
+	0% { @include prefix(transform, rotate(0deg)); }
+	100% { @include prefix(transform, rotate(280deg)); }
+
+}
+
+
+@-webkit-keyframes dash {
+
+	0% { stroke-dashoffset: $progress-bar__spinner-offset; }
+
+	50% {
+
+		stroke-dashoffset: $progress-bar__spinner-offset / 4;
+
+		@include prefix(transform, rotate(135deg));
+
+	}
+
+	100% {
+
+		stroke-dashoffset: $progress-bar__spinner-offset;
+
+		@include prefix(transform, rotate(450deg));
+
+	}
+
+}
+
+@-moz-keyframes dash {
+
+	0% { stroke-dashoffset: $progress-bar__spinner-offset; }
+
+	50% {
+
+		stroke-dashoffset: $progress-bar__spinner-offset / 4;
+
+		@include prefix(transform, rotate(135deg));
+
+	}
+
+	100% {
+
+		stroke-dashoffset: $progress-bar__spinner-offset;
+
+		@include prefix(transform, rotate(450deg));
+
+	}
+
+}
+
+@keyframes dash {
+
+	0% { stroke-dashoffset: $progress-bar__spinner-offset; }
+
+	50% {
+
+		stroke-dashoffset: $progress-bar__spinner-offset / 4;
+
+		@include prefix(transform, rotate(135deg));
+
+	}
+
+	100% {
+
+		stroke-dashoffset: $progress-bar__spinner-offset;
+
+		@include prefix(transform, rotate(450deg));
+
+	}
+
+}
