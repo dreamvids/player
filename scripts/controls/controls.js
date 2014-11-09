@@ -7,9 +7,35 @@
 
 DreamPlayer.prototype.setControls = function() {
 
-	this.addEvent("mouseMove", "player", function(event, player) {
+	this.addEvent("mousemove", "player", function(event, player) {
 
-		player.showControls();
+		setTimeout(function(player) {
+		
+			return function() {
+		
+				player.showControls();
+		
+			};
+		
+		}(player), 1);
+
+	});
+
+	this.addEvent("click", "video", function(event, player) {
+
+		if (!!("ontouchstart" in window) && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+
+			setTimeout(function(player) {
+			
+				return function() {
+			
+					player.hideControls();
+			
+				};
+			
+			}(player), 2);
+
+		}
 
 	});
 

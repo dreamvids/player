@@ -21,6 +21,23 @@
 
 	@include transition(opacity 0.8s);
 
+	-webkit-tap-highlight-color: transparentize(white, .8);
+
+}
+
+@media (max-width: $sm) {
+
+	.player .settings {
+
+		top: ($controls-height - $icon-size) / 3 - $icon-padding--little;
+		right: ($controls-height - $icon-size) / 3 - $icon-padding--little;
+
+		padding: $icon-padding--little $icon-padding--little;
+
+		background-position: $icon-padding--little $icon-padding--little;
+		
+	}
+
 }
 
 .player.show-settings .settings {

@@ -3,15 +3,30 @@
    ============================= */
 
 
-$controls-margins: 48px;
-$controls-margin-bottom: 42px;
-$controls-height: 92px;
+$lt: 360px;
+$xs: 480px;
+$sm: 768px;
+$md: 992px;
+$lg: 1200px;
+$xl: 1600px;
 
 
-$icon-size:      28px;
-$icon-size--big: 64px;
+$controls-margins:         48px;
+$controls-margins--little: 28px;
 
-$icon-padding: 18px;
+$controls-margin-bottom:         42px;
+$controls-margin-bottom--little: 16px;
+
+$controls-height:         92px;
+$controls-height--little: 62px;
+
+
+$icon-size: 28px;
+$icon-padding:         18px;
+$icon-padding--little:  8px;
+
+$icon-size--big:         64px;
+$icon-size--big--little: 52px;
 
 
 $progress-bar-height:       4px;

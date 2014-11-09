@@ -71,25 +71,43 @@ DreamPlayer.prototype.setProgressBar = function() {
 
 	this.addEvent("mousedown", "progressBar", function(event, player) {
 
-		player.progressBarClicking = true;
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 
-		DreamPlayer.addClass(player.elements.progressBar, "progress-bar--clicking");
+			player.progressBarClicking = true;
 
-		player.changeTime.call(player, event);
+			DreamPlayer.addClass(player.elements.progressBar, "progress-bar--clicking");
+
+			player.changeTime.call(player, event);
+
+		}
 
 	});
 
 	this.addEvent("mouseup", "progressBar", function(event, player) {
 
-		player.progressBarClicking = false;
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 
-		DreamPlayer.removeClass(player.elements.progressBar, "progress-bar--clicking");
+			player.progressBarClicking = false;
 
-		player.changeTime.call(player, event);
+			DreamPlayer.removeClass(player.elements.progressBar, "progress-bar--clicking");
+
+			player.changeTime.call(player, event);
+
+		}
 
 	});
 
 	this.addEvent("mousemove", "player", function(event, player) {
+
+		if (player.progressBarClicking) {
+
+			player.changeTime.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("touchmove", "player", function(event, player) {
 
 		if (player.progressBarClicking) {
 

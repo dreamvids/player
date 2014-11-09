@@ -22,6 +22,23 @@
 
 	@include transition(opacity 0.8s);
 
+	-webkit-tap-highlight-color: transparent;
+
+}
+
+@media (max-width: $sm) {
+
+	.player .play-pause {
+
+		width: $icon-size--big--little;
+		height: $icon-size--big--little;
+		margin-left: -$icon-size--big--little / 2;
+		margin-top: -$icon-size--big--little / 2;
+
+		background-size: $icon-size--big--little * 2 $icon-size--big--little;
+		
+	}
+
 }
 
 .player.show-settings .play-pause {
@@ -35,5 +52,15 @@
 .player.playing .play-pause {
 
 	background-position: -$icon-size--big 0;
+
+}
+
+@media (max-width: $sm) {
+
+	.player.playing .play-pause {
+
+		background-position: -$icon-size--big--little 0;
+
+	}
 
 }

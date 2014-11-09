@@ -109,8 +109,6 @@ DreamPlayer.prototype.insert = function() {
 
 	this.settings.cible.appendChild(player);
 
-	player.style.height = player.offsetWidth / (16 / 9) + "px";
-
 	return elements;
 
 };

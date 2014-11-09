@@ -34,8 +34,28 @@
 
 }
 
+@media (max-width: $sm) {
+
+	.player .controls {
+
+		height: $controls-height--little;
+
+	}
+
+}
+
 .player .controls__wrap {
 
 	margin: $controls-margins;
+
+}
+
+@media (max-width: $sm) {
+
+	.player .controls__wrap {
+
+		margin: $controls-margins--little;
+
+	}
 
 }

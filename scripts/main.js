@@ -31,4 +31,16 @@ var DreamPlayer = function(settings) {
 
 	this.setControls();
 
+	this.elements.player.style.height = this.elements.player.offsetWidth / (16 / 9) + "px";
+
+	window.addEventListener("resize", function(player) {
+	
+		return function() {
+	
+			player.style.height = player.offsetWidth / (16 / 9) + "px";
+	
+		};
+	
+	}(this.elements.player), false);
+
 }

@@ -9,7 +9,11 @@ DreamPlayer.prototype.setPlayPause = function() {
 
 	this.addEvent("click", "video", function(event, player) {
 
-		player.tooglePlayPause();
+		if (!("ontouchstart" in window)) {
+
+			player.tooglePlayPause();
+
+		}
 
 	});
 

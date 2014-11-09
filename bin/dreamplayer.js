@@ -31,6 +31,18 @@ var DreamPlayer = function(settings) {
 
 	this.setControls();
 
+	this.elements.player.style.height = this.elements.player.offsetWidth / (16 / 9) + "px";
+
+	window.addEventListener("resize", function(player) {
+	
+		return function() {
+	
+			player.style.height = player.offsetWidth / (16 / 9) + "px";
+	
+		};
+	
+	}(this.elements.player), false);
+
 }
 
 /**
@@ -41,9 +53,35 @@ var DreamPlayer = function(settings) {
 
 DreamPlayer.prototype.setControls = function() {
 
-	this.addEvent("mouseMove", "player", function(event, player) {
+	this.addEvent("mousemove", "player", function(event, player) {
 
-		player.showControls();
+		setTimeout(function(player) {
+		
+			return function() {
+		
+				player.showControls();
+		
+			};
+		
+		}(player), 1);
+
+	});
+
+	this.addEvent("click", "video", function(event, player) {
+
+		if (!!("ontouchstart" in window) && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+
+			setTimeout(function(player) {
+			
+				return function() {
+			
+					player.hideControls();
+			
+				};
+			
+			}(player), 2);
+
+		}
 
 	});
 
@@ -262,8 +300,6 @@ DreamPlayer.prototype.insert = function() {
 	player.appendChild(controls);
 
 	this.settings.cible.appendChild(player);
-
-	player.style.height = player.offsetWidth / (16 / 9) + "px";
 
 	return elements;
 
@@ -519,7 +555,11 @@ DreamPlayer.prototype.setPlayPause = function() {
 
 	this.addEvent("click", "video", function(event, player) {
 
-		player.tooglePlayPause();
+		if (!("ontouchstart" in window)) {
+
+			player.tooglePlayPause();
+
+		}
 
 	});
 
@@ -643,25 +683,43 @@ DreamPlayer.prototype.setProgressBar = function() {
 
 	this.addEvent("mousedown", "progressBar", function(event, player) {
 
-		player.progressBarClicking = true;
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 
-		DreamPlayer.addClass(player.elements.progressBar, "progress-bar--clicking");
+			player.progressBarClicking = true;
 
-		player.changeTime.call(player, event);
+			DreamPlayer.addClass(player.elements.progressBar, "progress-bar--clicking");
+
+			player.changeTime.call(player, event);
+
+		}
 
 	});
 
 	this.addEvent("mouseup", "progressBar", function(event, player) {
 
-		player.progressBarClicking = false;
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 
-		DreamPlayer.removeClass(player.elements.progressBar, "progress-bar--clicking");
+			player.progressBarClicking = false;
 
-		player.changeTime.call(player, event);
+			DreamPlayer.removeClass(player.elements.progressBar, "progress-bar--clicking");
+
+			player.changeTime.call(player, event);
+
+		}
 
 	});
 
 	this.addEvent("mousemove", "player", function(event, player) {
+
+		if (player.progressBarClicking) {
+
+			player.changeTime.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("touchmove", "player", function(event, player) {
 
 		if (player.progressBarClicking) {
 
