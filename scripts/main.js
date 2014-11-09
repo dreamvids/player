@@ -5,7 +5,16 @@
  *	Fichier JavaScript principal.
  */
 
-var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1,
+	isTouch = false;
+
+window.addEventListener("touchstart", function setIsTouch() {
+
+    isTouch = true;
+
+    window.removeEventListener('touchstart', setIsTouch);
+
+}, false);
 
 var DreamPlayer = function(settings) {
 
@@ -22,8 +31,6 @@ var DreamPlayer = function(settings) {
 	this.elements = this.insert();
 
 	this.setEvents();
-
-	this.loadSources();
 
 	this.setPlayPause();
 	this.setProgressBar();
@@ -42,5 +49,7 @@ var DreamPlayer = function(settings) {
 		};
 	
 	}(this.elements.player), false);
+
+	this.loadSources();
 
 }

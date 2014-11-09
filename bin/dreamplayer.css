@@ -209,9 +209,9 @@
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   border-radius: 50%;
-  -webkit-transition: 0.15s;
-  -moz-transition: 0.15s;
-  transition: 0.15s; }
+  -webkit-transition: all .3s cubic-bezier(0, 1.8, 1, 1.8), left .15s ease;
+  -moz-transition: all .3s cubic-bezier(0, 1.8, 1, 1.8), left .15s ease;
+  transition: all .3s cubic-bezier(0, 1.8, 1, 1.8), left .15s ease; }
 
 .player .progress-bar:hover .progress-bar__current {
   width: 18px;
@@ -256,9 +256,9 @@
   -webkit-animation: rotator 1.4s linear infinite;
   -moz-animation: rotator 1.4s linear infinite;
   animation: rotator 1.4s linear infinite;
-  -webkit-transition: 0.15s;
-  -moz-transition: 0.15s;
-  transition: 0.15s; }
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  transition: opacity 1s; }
 
 .player .progress-bar:hover .progress-bar__spinner {
   width: 34px;

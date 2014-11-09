@@ -25,7 +25,15 @@ $progress-bar__spinner-duration: 1.4s;
 	opacity: 0;
 
 	@include prefix(animation, rotator $progress-bar__spinner-duration linear infinite);
-	@include transition(.15s);
+	@include transition(left .15s, opacity 2s);
+
+}
+
+.player .progress-bar--clicking .progress-bar__spinner {
+
+	-webkit-transition: left 0, opacity 2s!important;
+	   -moz-transition: left 0, opacity 2s!important;
+			transition: left 0, opacity 2s!important;
 
 }
 

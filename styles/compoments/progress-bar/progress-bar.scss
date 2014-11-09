@@ -68,7 +68,7 @@
 	background: $blue;
 
 	@include border-radius;
-	@include transition(.15s);
+	@include transition(#{"all .3s cubic-bezier(0, 1.8, 1, 1.8), left .15s ease"});
 
 }
 
@@ -103,8 +103,7 @@
 }
 
 .player .progress-bar--clicking .progress-bar__viewed,
-.player .progress-bar--clicking .progress-bar__current,
-.player .progress-bar--clicking .progress-bar__spinner {
+.player .progress-bar--clicking .progress-bar__current {
 
 	-webkit-transition: 0!important;
 	   -moz-transition: 0!important;

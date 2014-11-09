@@ -5,7 +5,16 @@
  *	Fichier JavaScript principal.
  */
 
-var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+var isFirefox = navigator.userAgent.toLowerCase().indexOf("firefox") > -1,
+	isTouch = false;
+
+window.addEventListener("touchstart", function setIsTouch() {
+
+    isTouch = true;
+
+    window.removeEventListener('touchstart', setIsTouch);
+
+}, false);
 
 var DreamPlayer = function(settings) {
 
@@ -22,8 +31,6 @@ var DreamPlayer = function(settings) {
 	this.elements = this.insert();
 
 	this.setEvents();
-
-	this.loadSources();
 
 	this.setPlayPause();
 	this.setProgressBar();
@@ -42,6 +49,8 @@ var DreamPlayer = function(settings) {
 		};
 	
 	}(this.elements.player), false);
+
+	this.loadSources();
 
 }
 
@@ -69,7 +78,7 @@ DreamPlayer.prototype.setControls = function() {
 
 	this.addEvent("click", "video", function(event, player) {
 
-		if (!!("ontouchstart" in window) && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+		if (isTouch && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 
 			setTimeout(function(player) {
 			
@@ -110,17 +119,34 @@ DreamPlayer.prototype.showControls = function() {
 
 	if ((" " + this.elements.controls.className + " ").search(" show ") <= 0) {
 
+		this.elements.player.style.cursor = "";
+
 		this.elements.controls.className += " show";
 		this.elements.player.className += " show-settings";
-		this.setTimeoutHideControls();
 
 	}
+
+	this.setTimeoutHideControls();
 
 };
 
 DreamPlayer.prototype.hideControls = function() {
 
 	if ((" " + this.elements.controls.className + " ").search(" show ") >= 0) {
+
+		setTimeout(function(elements) {
+		
+			return function() {
+
+				if ((" " + elements.controls.className + " ").search(" show ") <= 0) {
+
+					elements.player.style.cursor = "none";
+
+				}
+		
+			};
+		
+		}(this.elements), 1000);
 
 		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
 		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");
@@ -555,7 +581,7 @@ DreamPlayer.prototype.setPlayPause = function() {
 
 	this.addEvent("click", "video", function(event, player) {
 
-		if (!("ontouchstart" in window)) {
+		if (!isTouch) {
 
 			player.tooglePlayPause();
 
@@ -850,11 +876,12 @@ DreamPlayer.settings = function(settings) {
 
 DreamPlayer.prototype.loadSources = function() {
 
-	var selection = "none";
+	var selection = "none",
+		marge = 80;
 
 	for (var i = 0; i < this.settings.sources.length; i++) {
 
-		if (this.settings.sources[i].format - this.elements.player.offsetWidth > 0) {
+		if (this.elements.player.offsetWidth - this.settings.sources[i].format > 0) {
 
 			selection = i;
 
@@ -864,7 +891,7 @@ DreamPlayer.prototype.loadSources = function() {
 
 	if (selection == "none") {
 
-		selection = this.settings.sources.length - 1;
+		selection = 0;
 
 	}
 

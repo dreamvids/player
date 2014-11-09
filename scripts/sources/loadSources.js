@@ -7,11 +7,12 @@
 
 DreamPlayer.prototype.loadSources = function() {
 
-	var selection = "none";
+	var selection = "none",
+		marge = 80;
 
 	for (var i = 0; i < this.settings.sources.length; i++) {
 
-		if (this.settings.sources[i].format - this.elements.player.offsetWidth > 0) {
+		if (this.elements.player.offsetWidth - this.settings.sources[i].format > 0) {
 
 			selection = i;
 
@@ -21,7 +22,7 @@ DreamPlayer.prototype.loadSources = function() {
 
 	if (selection == "none") {
 
-		selection = this.settings.sources.length - 1;
+		selection = 0;
 
 	}
 

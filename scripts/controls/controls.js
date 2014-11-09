@@ -23,7 +23,7 @@ DreamPlayer.prototype.setControls = function() {
 
 	this.addEvent("click", "video", function(event, player) {
 
-		if (!!("ontouchstart" in window) && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+		if (isTouch && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 
 			setTimeout(function(player) {
 			
@@ -64,17 +64,34 @@ DreamPlayer.prototype.showControls = function() {
 
 	if ((" " + this.elements.controls.className + " ").search(" show ") <= 0) {
 
+		this.elements.player.style.cursor = "";
+
 		this.elements.controls.className += " show";
 		this.elements.player.className += " show-settings";
-		this.setTimeoutHideControls();
 
 	}
+
+	this.setTimeoutHideControls();
 
 };
 
 DreamPlayer.prototype.hideControls = function() {
 
 	if ((" " + this.elements.controls.className + " ").search(" show ") >= 0) {
+
+		setTimeout(function(elements) {
+		
+			return function() {
+
+				if ((" " + elements.controls.className + " ").search(" show ") <= 0) {
+
+					elements.player.style.cursor = "none";
+
+				}
+		
+			};
+		
+		}(this.elements), 1000);
 
 		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
 		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");

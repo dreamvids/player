@@ -14,13 +14,13 @@
 	background: $blue;
 	opacity: 0;
 
-	@include transition(opacity 0.8s);
+	@include transition(opacity .8s);
 
 	&.show {
 
 		opacity: 1;
 
-		@include transition(opacity 0.2s);
+		@include transition(opacity .2s);
 
 	}
 
