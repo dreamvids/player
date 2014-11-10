@@ -7,6 +7,9 @@
 
 DreamPlayer.prototype.setControls = function() {
 
+	this.showControls();
+	this.setTimeoutHideControls();
+
 	this.addEvent("mousemove", "player", function(event, player) {
 
 		setTimeout(function(player) {

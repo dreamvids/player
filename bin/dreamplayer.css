@@ -105,6 +105,9 @@
   transition: opacity 0.8s;
   -webkit-tap-highlight-color: transparent; }
 
+.player .play-pause--svg {
+  background: none; }
+
 @media (max-width: 768px) {
   .player .play-pause {
     width: 52px;
@@ -128,16 +131,20 @@
     background-position: -52px 0; }
  }
 
-/* SETTINGS
+/* ICONS
    ============================= */
-.player .settings {
+.player .icons {
   position: absolute;
   top: 14px;
-  right: 14px;
+  right: 14px; }
+
+/* ICON
+   ============================= */
+.player .icon {
+  float: right;
   width: 28px;
   height: 28px;
   padding: 18px 18px;
-  background: url(../assets/images/player/settings.png);
   background-size: 28px 28px;
   background-position: 18px 18px;
   background-repeat: no-repeat;
@@ -148,15 +155,18 @@
   transition: opacity 0.8s;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2); }
 
+.icon--settings {
+  background: url(../assets/images/player/settings.png); }
+
 @media (max-width: 768px) {
-  .player .settings {
+  .player .icon {
     top: 13.3333333333px;
     right: 13.3333333333px;
     padding: 8px 8px;
     background-position: 8px 8px; }
  }
 
-.player.show-settings .settings {
+.player.show-settings .icon {
   opacity: 1;
   -webkit-transition: opacity 0.2s;
   -moz-transition: opacity 0.2s;
@@ -234,7 +244,7 @@
   -moz-transition: 0.15s;
   transition: 0.15s; }
 
-.player .progress-bar--clicking .progress-bar__viewed, .player .progress-bar--clicking .progress-bar__current, .player .progress-bar--clicking .progress-bar__spinner {
+.player .progress-bar--clicking .progress-bar__viewed, .player .progress-bar--clicking .progress-bar__current {
   -webkit-transition: 0 !important;
   -moz-transition: 0 !important;
   transition: 0 !important; }
@@ -256,9 +266,14 @@
   -webkit-animation: rotator 1.4s linear infinite;
   -moz-animation: rotator 1.4s linear infinite;
   animation: rotator 1.4s linear infinite;
-  -webkit-transition: opacity 1s;
-  -moz-transition: opacity 1s;
-  transition: opacity 1s; }
+  -webkit-transition: left .15s, opacity 2s;
+  -moz-transition: left .15s, opacity 2s;
+  transition: left .15s, opacity 2s; }
+
+.player .progress-bar--clicking .progress-bar__spinner {
+  -webkit-transition: left 0, opacity 2s !important;
+  -moz-transition: left 0, opacity 2s !important;
+  transition: left 0, opacity 2s !important; }
 
 .player .progress-bar:hover .progress-bar__spinner {
   width: 34px;

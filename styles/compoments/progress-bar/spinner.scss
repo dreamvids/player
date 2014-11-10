@@ -25,7 +25,7 @@ $progress-bar__spinner-duration: 1.4s;
 	opacity: 0;
 
 	@include prefix(animation, rotator $progress-bar__spinner-duration linear infinite);
-	@include transition(left .15s, opacity 2s);
+	@include transition(#{"left .15s, opacity 2s"});
 
 }
 

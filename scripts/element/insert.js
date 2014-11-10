@@ -14,6 +14,9 @@ DreamPlayer.prototype.insert = function() {
 	elements["player"] = player;
 
 		var video = document.createElement("video");
+
+		video.volume = 0;
+
 		video.setAttribute("autoplay", "");
 		video.setAttribute("autobuffer", "");
 		video.setAttribute("x-webkit-airplay", "allow");
@@ -40,15 +43,59 @@ DreamPlayer.prototype.insert = function() {
 
 		var playPause = document.createElement("div");
 		playPause.className = "play-pause";
+
+		if (canSVG && !isFirefox) {
+
+			playPause.className = "play-pause play-pause--svg";
+
+			var playPauseSVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+			playPauseSVG.setAttribute("class", "play-pause__svg");
+			playPauseSVG.setAttribute("viewBox", "0 0 32 32");
+			playPauseSVG.setAttribute("fill", "white");
+			playPauseSVG.setAttribute("stroke", "white");
+			playPauseSVG.setAttribute("stroke-linejoin", "round");
+			playPauseSVG.setAttribute("stroke-width", "8");
+			playPauseSVG.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+
+				var playPauseSVG1 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+				playPauseSVG1.setAttribute("points", "6,4 28,16 6,16 6,16");
+				playPauseSVG.appendChild(playPauseSVG1);
+				elements["playPauseSVG1"] = playPauseSVG1;
+
+				var playPauseSVG2 = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
+				playPauseSVG2.setAttribute("points", "6,16 28,16 6,28 6,28");
+				playPauseSVG.appendChild(playPauseSVG2);
+				elements["playPauseSVG2"] = playPauseSVG2;
+
+			playPause.appendChild(playPauseSVG);
+			elements["playPauseSVG"] = playPause;
+
+		}
+
 		elements["playPause"] = playPause;
 
 	player.appendChild(playPause);
 
-		var settings = document.createElement("div");
-		settings.className = "settings";
-		elements["settings"] = settings;
+		var icons = document.createElement("div");
+		icons.className = "icons";
 
-	player.appendChild(settings);
+			var settings = document.createElement("div");
+			settings.className = "icon icon--settings";
+			elements["settings"] = settings;
+	
+			var settings2 = document.createElement("div");
+			settings2.className = "icon icon--settings";
+			elements["settings2"] = settings2;
+	
+			var settings3 = document.createElement("div");
+			settings3.className = "icon icon--settings";
+			elements["settings3"] = settings3;
+	
+		icons.appendChild(settings);
+		icons.appendChild(settings2);
+		icons.appendChild(settings3);
+
+	player.appendChild(icons);
 
 		var controls = document.createElement("div");
 		controls.className = "controls";

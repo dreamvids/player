@@ -1,0 +1,11 @@
+
+/* ICONS
+   ============================= */
+
+.player .icons {
+	
+	position: absolute;
+	top: ($controls-height - $icon-size) / 2 - $icon-padding;
+	right: ($controls-height - $icon-size) / 2 - $icon-padding;
+
+}

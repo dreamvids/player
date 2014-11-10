@@ -1,18 +1,15 @@
 
-/* SETTINGS
+/* ICON
    ============================= */
 
-.player .settings {
-
-	position: absolute;
-	top: ($controls-height - $icon-size) / 2 - $icon-padding;
-	right: ($controls-height - $icon-size) / 2 - $icon-padding;
+.player .icon {
+	
+	float: right;
 
 	width: $icon-size;
 	height: $icon-size;
 	padding: $icon-padding $icon-padding;
 
-	background: url(../assets/images/player/settings.png);
 	background-size: $icon-size $icon-size;
 	background-position: $icon-padding $icon-padding;
 	background-repeat: no-repeat;
@@ -25,9 +22,15 @@
 
 }
 
+.icon--settings {
+
+	background: url(../assets/images/player/settings.png);
+
+}
+
 @media (max-width: $sm) {
 
-	.player .settings {
+	.player .icon {
 
 		top: ($controls-height - $icon-size) / 3 - $icon-padding--little;
 		right: ($controls-height - $icon-size) / 3 - $icon-padding--little;
@@ -40,7 +43,7 @@
 
 }
 
-.player.show-settings .settings {
+.player.show-settings .icon {
 
 	opacity: 1;
 
