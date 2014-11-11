@@ -1,6 +1,6 @@
 
 /**
- * interactions/progressBar.js
+ * interactions/progress-bar.js
  *
  * Intéractions de la barre de progression.
  */

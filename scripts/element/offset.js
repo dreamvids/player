@@ -7,10 +7,12 @@
 
 DreamPlayer.getOffsets = function(element) {
 
+	var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+
 	var x = 0,
 		y = 0;
 
-	while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
+	while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop) && element !== fullscreenElement) {
 
 		x += element.offsetLeft - element.scrollLeft;
 		y += element.offsetTop - element.scrollTop;
@@ -21,7 +23,8 @@ DreamPlayer.getOffsets = function(element) {
 
 	return {
 
-		top: y, left: x
+		top: y,
+		left: x
 
 	};
 

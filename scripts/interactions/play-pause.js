@@ -1,6 +1,6 @@
 
 /**
- *	interactions/playPause.js
+ *	interactions/play-pause.js
  *
  *	Intéractions Play et Pause.
  */

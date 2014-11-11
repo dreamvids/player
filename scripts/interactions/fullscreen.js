@@ -7,11 +7,13 @@
 
 DreamPlayer.prototype.toggleFullscreen = function() {
 
-	if (document.webkitIsFullScreen || document.mozFullscreen) {
+	var player = this.elements.player;
 
-		if (document.cancelFullScreen) {
+	if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
 
-			document.cancelFullScreen();
+		if (document.exitFullscreen) {
+
+			document.exitFullscreen();
 
 		}
 
@@ -27,31 +29,55 @@ DreamPlayer.prototype.toggleFullscreen = function() {
 
 		}
 
+		else if (document.msExitFullscreen){
+
+			document.msExitFullscreen();
+
+		}
+
 		this.removeClass("fullscreen");
 
 	}
 
 	else {
 
-		if (this.elements.player.requestFullScreen) {
+		if (player.requestFullScreen) {
 
-			this.elements.player.requestFullScreen();
-
-		}
-
-		else if (this.elements.player.webkitRequestFullScreen) {
-
-			this.elements.player.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+			player.requestFullScreen();
 
 		}
 
-		else if (this.elements.player.mozRequestFullScreen){
+		else if (player.requestFullscreen) {
 
-			this.elements.player.mozRequestFullScreen();
+			player.requestFullscreen();
 
 		}
 
-		if (this.elements.player.requestFullScreen || this.elements.player.webkitRequestFullScreen || this.elements.player.mozRequestFullScreen) {
+		else if (player.webkitRequestFullScreen) {
+
+			player.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+
+		}
+
+		else if (player.webkitRequestFullscreen) {
+
+			player.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+
+		}
+
+		else if (player.mozRequestFullScreen){
+
+			player.mozRequestFullScreen();
+
+		}
+
+		else if (player.msRequestFullscreen){
+
+			player.msRequestFullscreen();
+
+		}
+
+		if (player.requestFullScreen || player.requestFullscreen || player.webkitRequestFullScreen || player.webkitRequestFullscreen || player.mozRequestFullScreen || player.msRequestFullscreen) {
 
 			this.addClass("fullscreen");
 

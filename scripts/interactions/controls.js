@@ -14,10 +14,10 @@ DreamPlayer.prototype.setControls = function() {
 
 	this.addEvent("mousemove", "player", function(event, player) {
 
-		if (event.x !== player.lastMouseMove.x && event.y !== player.lastMouseMove.y) {
+		if (event.pageX !== player.lastMouseMove.x && event.pageY !== player.lastMouseMove.y) {
 
-			player.lastMouseMove.x = event.x;
-			player.lastMouseMove.y = event.y;
+			player.lastMouseMove.x = event.pageX;
+			player.lastMouseMove.y = event.pageY;
 
 			setTimeout(function(player) {
 			

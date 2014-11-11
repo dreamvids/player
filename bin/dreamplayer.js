@@ -287,10 +287,12 @@ DreamPlayer.prototype.insert = function() {
 
 DreamPlayer.getOffsets = function(element) {
 
+	var fullscreenElement = document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+
 	var x = 0,
 		y = 0;
 
-	while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop)) {
+	while (element && !isNaN(element.offsetLeft) && !isNaN(element.offsetTop) && element !== fullscreenElement) {
 
 		x += element.offsetLeft - element.scrollLeft;
 		y += element.offsetTop - element.scrollTop;
@@ -301,7 +303,8 @@ DreamPlayer.getOffsets = function(element) {
 
 	return {
 
-		top: y, left: x
+		top: y,
+		left: x
 
 	};
 
@@ -534,10 +537,10 @@ DreamPlayer.prototype.setControls = function() {
 
 	this.addEvent("mousemove", "player", function(event, player) {
 
-		if (event.x !== player.lastMouseMove.x && event.y !== player.lastMouseMove.y) {
+		if (event.pageX !== player.lastMouseMove.x && event.pageY !== player.lastMouseMove.y) {
 
-			player.lastMouseMove.x = event.x;
-			player.lastMouseMove.y = event.y;
+			player.lastMouseMove.x = event.pageX;
+			player.lastMouseMove.y = event.pageY;
 
 			setTimeout(function(player) {
 			
@@ -640,11 +643,13 @@ DreamPlayer.prototype.hideControls = function() {
 
 DreamPlayer.prototype.toggleFullscreen = function() {
 
-	if (document.webkitIsFullScreen || document.mozFullscreen) {
+	var player = this.elements.player;
 
-		if (document.cancelFullScreen) {
+	if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
 
-			document.cancelFullScreen();
+		if (document.exitFullscreen) {
+
+			document.exitFullscreen();
 
 		}
 
@@ -660,31 +665,55 @@ DreamPlayer.prototype.toggleFullscreen = function() {
 
 		}
 
+		else if (document.msExitFullscreen){
+
+			document.msExitFullscreen();
+
+		}
+
 		this.removeClass("fullscreen");
 
 	}
 
 	else {
 
-		if (this.elements.player.requestFullScreen) {
+		if (player.requestFullScreen) {
 
-			this.elements.player.requestFullScreen();
-
-		}
-
-		else if (this.elements.player.webkitRequestFullScreen) {
-
-			this.elements.player.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+			player.requestFullScreen();
 
 		}
 
-		else if (this.elements.player.mozRequestFullScreen){
+		else if (player.requestFullscreen) {
 
-			this.elements.player.mozRequestFullScreen();
+			player.requestFullscreen();
 
 		}
 
-		if (this.elements.player.requestFullScreen || this.elements.player.webkitRequestFullScreen || this.elements.player.mozRequestFullScreen) {
+		else if (player.webkitRequestFullScreen) {
+
+			player.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+
+		}
+
+		else if (player.webkitRequestFullscreen) {
+
+			player.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+
+		}
+
+		else if (player.mozRequestFullScreen){
+
+			player.mozRequestFullScreen();
+
+		}
+
+		else if (player.msRequestFullscreen){
+
+			player.msRequestFullscreen();
+
+		}
+
+		if (player.requestFullScreen || player.requestFullscreen || player.webkitRequestFullScreen || player.webkitRequestFullscreen || player.mozRequestFullScreen || player.msRequestFullscreen) {
 
 			this.addClass("fullscreen");
 
@@ -711,7 +740,7 @@ DreamPlayer.prototype.setFullscreen = function() {
 };
 
 /**
- *	interactions/playPause.js
+ *	interactions/play-pause.js
  *
  *	Intéractions Play et Pause.
  */
@@ -839,7 +868,7 @@ DreamPlayer.prototype.tooglePlayPause = function() {
 };
 
 /**
- * interactions/progressBar.js
+ * interactions/progress-bar.js
  *
  * Intéractions de la barre de progression.
  */
