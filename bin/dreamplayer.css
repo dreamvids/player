@@ -155,8 +155,15 @@
   transition: opacity 0.8s;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0.2); }
 
-.icon--settings {
-  background: url(../assets/images/player/settings.png); }
+.player .icon--settings {
+  background-image: url(../assets/images/player/settings.png); }
+
+.player .icon--fullscreen {
+  background-image: url(../assets/images/player/fullscreen.png);
+  background-size: 84px 28px; }
+
+.player.fullscreen .icon--fullscreen {
+  background-position: -38px 18px; }
 
 @media (max-width: 768px) {
   .player .icon {

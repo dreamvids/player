@@ -1,26 +1,35 @@
 
 /**
- *	controls/controls.js
+ * interactions/controls.js
  *
- *	Element contenant les contrôles.
+ * Element contenant les contrôles.
  */
 
 DreamPlayer.prototype.setControls = function() {
+
+	this.lastMouseMove = { x: -1, y: -1 };
 
 	this.showControls();
 	this.setTimeoutHideControls();
 
 	this.addEvent("mousemove", "player", function(event, player) {
 
-		setTimeout(function(player) {
-		
-			return function() {
-		
-				player.showControls();
-		
-			};
-		
-		}(player), 1);
+		if (event.x !== player.lastMouseMove.x && event.y !== player.lastMouseMove.y) {
+
+			player.lastMouseMove.x = event.x;
+			player.lastMouseMove.y = event.y;
+
+			setTimeout(function(player) {
+			
+				return function() {
+			
+					player.showControls();
+			
+				};
+			
+			}(player), 1);
+
+		}
 
 	});
 

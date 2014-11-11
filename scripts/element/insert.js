@@ -80,20 +80,20 @@ DreamPlayer.prototype.insert = function() {
 		icons.className = "icons";
 
 			var settings = document.createElement("div");
-			settings.className = "icon icon--settings";
+			// settings.className = "icon icon--settings";
 			elements["settings"] = settings;
 	
 			var settings2 = document.createElement("div");
 			settings2.className = "icon icon--settings";
 			elements["settings2"] = settings2;
 	
-			var settings3 = document.createElement("div");
-			settings3.className = "icon icon--settings";
-			elements["settings3"] = settings3;
+			var fullscreen = document.createElement("div");
+			fullscreen.className = "icon icon--fullscreen";
+			elements["fullscreen"] = fullscreen;
 	
-		icons.appendChild(settings);
+		icons.appendChild(fullscreen);
 		icons.appendChild(settings2);
-		icons.appendChild(settings3);
+		icons.appendChild(settings);
 
 	player.appendChild(icons);
 

@@ -36,6 +36,7 @@ var DreamPlayer = function(settings) {
 	this.setPlayPause();
 	this.setProgressBar();
 	this.setSpinner();
+	this.setFullscreen();
 
 	this.setControls();
 
@@ -54,110 +55,6 @@ var DreamPlayer = function(settings) {
 	this.loadSources();
 
 }
-
-/**
- *	controls/controls.js
- *
- *	Element contenant les contrôles.
- */
-
-DreamPlayer.prototype.setControls = function() {
-
-	this.showControls();
-	this.setTimeoutHideControls();
-
-	this.addEvent("mousemove", "player", function(event, player) {
-
-		setTimeout(function(player) {
-		
-			return function() {
-		
-				player.showControls();
-		
-			};
-		
-		}(player), 1);
-
-	});
-
-	this.addEvent("click", "video", function(event, player) {
-
-		if (isTouch && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
-
-			setTimeout(function(player) {
-			
-				return function() {
-			
-					player.hideControls();
-			
-				};
-			
-			}(player), 2);
-
-		}
-
-	});
-
-};
-
-DreamPlayer.prototype.setTimeoutHideControls = function() {
-
-	if (this.timeoutHideControls) {
-
-		clearTimeout(this.timeoutHideControls);
-
-	}
-
-	this.timeoutHideControls = setTimeout(function(player) {
-
-		if (player && player.hideControls) {
-
-			player.hideControls();
-
-		}
-
-	}, 2500, this);
-};
-
-DreamPlayer.prototype.showControls = function() {
-
-	if ((" " + this.elements.controls.className + " ").search(" show ") <= 0) {
-
-		this.elements.player.style.cursor = "";
-
-		this.elements.controls.className += " show";
-		this.elements.player.className += " show-settings";
-
-	}
-
-	this.setTimeoutHideControls();
-
-};
-
-DreamPlayer.prototype.hideControls = function() {
-
-	if ((" " + this.elements.controls.className + " ").search(" show ") >= 0) {
-
-		setTimeout(function(elements) {
-		
-			return function() {
-
-				if ((" " + elements.controls.className + " ").search(" show ") <= 0) {
-
-					elements.player.style.cursor = "none";
-
-				}
-		
-			};
-		
-		}(this.elements), 1000);
-
-		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
-		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");
-
-	}
-
-};
 
 /**
  * element/classes.js
@@ -302,20 +199,20 @@ DreamPlayer.prototype.insert = function() {
 		icons.className = "icons";
 
 			var settings = document.createElement("div");
-			settings.className = "icon icon--settings";
+			// settings.className = "icon icon--settings";
 			elements["settings"] = settings;
 	
 			var settings2 = document.createElement("div");
 			settings2.className = "icon icon--settings";
 			elements["settings2"] = settings2;
 	
-			var settings3 = document.createElement("div");
-			settings3.className = "icon icon--settings";
-			elements["settings3"] = settings3;
+			var fullscreen = document.createElement("div");
+			fullscreen.className = "icon icon--fullscreen";
+			elements["fullscreen"] = fullscreen;
 	
-		icons.appendChild(settings);
+		icons.appendChild(fullscreen);
 		icons.appendChild(settings2);
-		icons.appendChild(settings3);
+		icons.appendChild(settings);
 
 	player.appendChild(icons);
 
@@ -623,6 +520,197 @@ DreamPlayer.events = [
 ];
 
 /**
+ * interactions/controls.js
+ *
+ * Element contenant les contrôles.
+ */
+
+DreamPlayer.prototype.setControls = function() {
+
+	this.lastMouseMove = { x: -1, y: -1 };
+
+	this.showControls();
+	this.setTimeoutHideControls();
+
+	this.addEvent("mousemove", "player", function(event, player) {
+
+		if (event.x !== player.lastMouseMove.x && event.y !== player.lastMouseMove.y) {
+
+			player.lastMouseMove.x = event.x;
+			player.lastMouseMove.y = event.y;
+
+			setTimeout(function(player) {
+			
+				return function() {
+			
+					player.showControls();
+			
+				};
+			
+			}(player), 1);
+
+		}
+
+	});
+
+	this.addEvent("click", "video", function(event, player) {
+
+		if (isTouch && (" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+
+			setTimeout(function(player) {
+			
+				return function() {
+			
+					player.hideControls();
+			
+				};
+			
+			}(player), 2);
+
+		}
+
+	});
+
+};
+
+DreamPlayer.prototype.setTimeoutHideControls = function() {
+
+	if (this.timeoutHideControls) {
+
+		clearTimeout(this.timeoutHideControls);
+
+	}
+
+	this.timeoutHideControls = setTimeout(function(player) {
+
+		if (player && player.hideControls) {
+
+			player.hideControls();
+
+		}
+
+	}, 2500, this);
+};
+
+DreamPlayer.prototype.showControls = function() {
+
+	if ((" " + this.elements.controls.className + " ").search(" show ") <= 0) {
+
+		this.elements.player.style.cursor = "";
+
+		this.elements.controls.className += " show";
+		this.elements.player.className += " show-settings";
+
+	}
+
+	this.setTimeoutHideControls();
+
+};
+
+DreamPlayer.prototype.hideControls = function() {
+
+	if ((" " + this.elements.controls.className + " ").search(" show ") >= 0) {
+
+		setTimeout(function(elements) {
+		
+			return function() {
+
+				if ((" " + elements.controls.className + " ").search(" show ") <= 0) {
+
+					elements.player.style.cursor = "none";
+
+				}
+		
+			};
+		
+		}(this.elements), 1000);
+
+		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
+		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");
+
+	}
+
+};
+
+/**
+ * interactions/fullscreen.js
+ *
+ * Intéraction fullscreen.
+ */
+
+DreamPlayer.prototype.toggleFullscreen = function() {
+
+	if (document.webkitIsFullScreen || document.mozFullscreen) {
+
+		if (document.cancelFullScreen) {
+
+			document.cancelFullScreen();
+
+		}
+
+		else if (document.webkitCancelFullScreen) {
+
+			document.webkitCancelFullScreen();
+
+		}
+
+		else if (document.mozCancelFullScreen){
+
+			document.mozCancelFullScreen();
+
+		}
+
+		this.removeClass("fullscreen");
+
+	}
+
+	else {
+
+		if (this.elements.player.requestFullScreen) {
+
+			this.elements.player.requestFullScreen();
+
+		}
+
+		else if (this.elements.player.webkitRequestFullScreen) {
+
+			this.elements.player.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+
+		}
+
+		else if (this.elements.player.mozRequestFullScreen){
+
+			this.elements.player.mozRequestFullScreen();
+
+		}
+
+		if (this.elements.player.requestFullScreen || this.elements.player.webkitRequestFullScreen || this.elements.player.mozRequestFullScreen) {
+
+			this.addClass("fullscreen");
+
+		}
+
+	}
+
+}
+
+DreamPlayer.prototype.setFullscreen = function() {
+
+	this.addEvent("dblclick", "video", function(event, player) {
+
+		player.toggleFullscreen();
+
+	});
+
+	this.addEvent("click", "fullscreen", function(event, player) {
+
+		player.toggleFullscreen();
+
+	});
+
+};
+
+/**
  *	interactions/playPause.js
  *
  *	Intéractions Play et Pause.
@@ -650,31 +738,31 @@ DreamPlayer.prototype.setPlayPause = function() {
 
 		player.addClass("playing");
 
-		if (player.elements["playPauseSVG"]) {
+		if (player.elements.playPauseSVG) {
 
-			player.elements["playPauseSVG1"].innerHTML = "";
-			player.elements["playPauseSVG2"].innerHTML = "";
+			player.elements.playPauseSVG1.innerHTML = "";
+			player.elements.playPauseSVG2.innerHTML = "";
 
 			var playPauseSVG1animate = document.createElementNS("http://www.w3.org/2000/svg", "animate");
 			playPauseSVG1animate.setAttribute("attributeType", "XML");
 			playPauseSVG1animate.setAttribute("attributeName", "points");
-			playPauseSVG1animate.setAttribute("from", player.elements["playPauseSVG1"].getAttribute("points"));
+			playPauseSVG1animate.setAttribute("from", player.elements.playPauseSVG1.getAttribute("points"));
 			playPauseSVG1animate.setAttribute("to", "26,4 26,28 24,28 24,4");
 			playPauseSVG1animate.setAttribute("begin", "indefinite");
 			playPauseSVG1animate.setAttribute("dur", ".18s");
-			player.elements["playPauseSVG1"].setAttribute("points", "6,4 8,4 8,28 6,28");
+			player.elements.playPauseSVG1.setAttribute("points", "6,4 8,4 8,28 6,28");
 
 			var playPauseSVG2animate = document.createElementNS("http://www.w3.org/2000/svg", "animate");
 			playPauseSVG2animate.setAttribute("attributeType", "XML");
 			playPauseSVG2animate.setAttribute("attributeName", "points");
-			playPauseSVG2animate.setAttribute("from", player.elements["playPauseSVG2"].getAttribute("points"));
+			playPauseSVG2animate.setAttribute("from", player.elements.playPauseSVG2.getAttribute("points"));
 			playPauseSVG2animate.setAttribute("to", "6,4 8,4 8,28 6,28");
 			playPauseSVG2animate.setAttribute("begin", "indefinite");
 			playPauseSVG2animate.setAttribute("dur", ".18s");
-			player.elements["playPauseSVG2"].setAttribute("points", "24,4 26,4 26,28 24,28");
+			player.elements.playPauseSVG2.setAttribute("points", "24,4 26,4 26,28 24,28");
 
-			player.elements["playPauseSVG1"].appendChild(playPauseSVG1animate);
-			player.elements["playPauseSVG2"].appendChild(playPauseSVG2animate);
+			player.elements.playPauseSVG1.appendChild(playPauseSVG1animate);
+			player.elements.playPauseSVG2.appendChild(playPauseSVG2animate);
 
 			playPauseSVG1animate.beginElement();
 			playPauseSVG2animate.beginElement();
@@ -687,31 +775,31 @@ DreamPlayer.prototype.setPlayPause = function() {
 
 		player.removeClass("playing");
 
-		if (player.elements["playPauseSVG"]) {
+		if (player.elements.playPauseSVG) {
 
-			player.elements["playPauseSVG1"].innerHTML = "";
-			player.elements["playPauseSVG2"].innerHTML = "";
+			player.elements.playPauseSVG1.innerHTML = "";
+			player.elements.playPauseSVG2.innerHTML = "";
 	
 			var playPauseSVG1animate = document.createElementNS("http://www.w3.org/2000/svg", "animate");
 			playPauseSVG1animate.setAttribute("attributeType", "XML");
 			playPauseSVG1animate.setAttribute("attributeName", "points");
-			playPauseSVG1animate.setAttribute("from", player.elements["playPauseSVG1"].getAttribute("points"));
+			playPauseSVG1animate.setAttribute("from", player.elements.playPauseSVG1.getAttribute("points"));
 			playPauseSVG1animate.setAttribute("to", "6,4 28,16 6,16 6,16");
 			playPauseSVG1animate.setAttribute("begin", "indefinite");
 			playPauseSVG1animate.setAttribute("dur", ".18s");
-			player.elements["playPauseSVG1"].setAttribute("points", "6,4 28,16 6,16 6,16");
+			player.elements.playPauseSVG1.setAttribute("points", "6,4 28,16 6,16 6,16");
 	
 			var playPauseSVG2animate = document.createElementNS("http://www.w3.org/2000/svg", "animate");
 			playPauseSVG2animate.setAttribute("attributeType", "XML");
 			playPauseSVG2animate.setAttribute("attributeName", "points");
-			playPauseSVG2animate.setAttribute("from", player.elements["playPauseSVG2"].getAttribute("points"));
+			playPauseSVG2animate.setAttribute("from", player.elements.playPauseSVG2.getAttribute("points"));
 			playPauseSVG2animate.setAttribute("to", "6,16 28,16 6,28 6,28");
 			playPauseSVG2animate.setAttribute("begin", "indefinite");
 			playPauseSVG2animate.setAttribute("dur", ".18s");
-			player.elements["playPauseSVG2"].setAttribute("points", "6,16 28,16 6,28 6,28");
+			player.elements.playPauseSVG2.setAttribute("points", "6,16 28,16 6,28 6,28");
 	
-			player.elements["playPauseSVG1"].appendChild(playPauseSVG1animate);
-			player.elements["playPauseSVG2"].appendChild(playPauseSVG2animate);
+			player.elements.playPauseSVG1.appendChild(playPauseSVG1animate);
+			player.elements.playPauseSVG2.appendChild(playPauseSVG2animate);
 	
 			playPauseSVG1animate.beginElement();
 			playPauseSVG2animate.beginElement();
@@ -751,9 +839,9 @@ DreamPlayer.prototype.tooglePlayPause = function() {
 };
 
 /**
- *	interactions/progressBar.js
+ * interactions/progressBar.js
  *
- *	Intéractions de la barre de progression.
+ * Intéractions de la barre de progression.
  */
 
 DreamPlayer.prototype.bufferUpdate = function() {
@@ -834,9 +922,9 @@ DreamPlayer.prototype.setProgressBar = function() {
 
 	});
 
-	this.addEvent("mouseup", "progressBar", function(event, player) {
+	this.addEvent("mouseup", document.body, function(event, player) {
 
-		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0 && player.progressBarClicking) {
 
 			player.progressBarClicking = false;
 

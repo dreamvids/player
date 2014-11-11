@@ -1,8 +1,8 @@
 
 /**
- *	interactions/progressBar.js
+ * interactions/progressBar.js
  *
- *	Intéractions de la barre de progression.
+ * Intéractions de la barre de progression.
  */
 
 DreamPlayer.prototype.bufferUpdate = function() {
@@ -83,9 +83,9 @@ DreamPlayer.prototype.setProgressBar = function() {
 
 	});
 
-	this.addEvent("mouseup", "progressBar", function(event, player) {
+	this.addEvent("mouseup", document.body, function(event, player) {
 
-		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0 && player.progressBarClicking) {
 
 			player.progressBarClicking = false;
 

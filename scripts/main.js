@@ -36,6 +36,7 @@ var DreamPlayer = function(settings) {
 	this.setPlayPause();
 	this.setProgressBar();
 	this.setSpinner();
+	this.setFullscreen();
 
 	this.setControls();
 

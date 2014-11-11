@@ -22,9 +22,22 @@
 
 }
 
-.icon--settings {
+.player .icon--settings {
 
-	background: url(../assets/images/player/settings.png);
+	background-image: url(../assets/images/player/settings.png);
+
+}
+
+.player .icon--fullscreen {
+
+	background-image: url(../assets/images/player/fullscreen.png);
+	background-size: $icon-size * 3 $icon-size;
+
+}
+
+.player.fullscreen .icon--fullscreen {
+
+	background-position: ($icon-padding - $icon-size * 2) $icon-padding;
 
 }
 
