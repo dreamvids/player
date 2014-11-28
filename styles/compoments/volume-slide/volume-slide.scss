@@ -1,0 +1,133 @@
+
+/**
+ * components/volume-slide.scss
+ * 
+ * Volume slide
+ */
+
+.player .volume-slide {
+
+	position: absolute;
+	top: ($controls-height - $icon-size) / 2 - $icon-padding + 6px;
+	right: ($controls-height - $icon-size) / 2 - $icon-padding + ($icon-size * 3 + $icon-padding * 3 * 2);
+
+	display: block;
+	width: 200px;
+	height: 52px;
+
+	cursor: pointer;
+	opacity: 0;
+
+	@include transition(opacity .2s);
+
+}
+
+@media (max-width: $sm) {
+
+	.player .volume-slide {
+
+		top: ($controls-height - $icon-size) / 3 - $icon-padding--little + 0;
+		right: ($controls-height - $icon-size) / 3 - $icon-padding--little + ($icon-size * 3 + $icon-padding--little * 3 * 2) + 8px;
+		
+	}
+
+}
+
+@media (max-width: $xs) {
+
+	.player .volume-slide {
+
+		width: 140px;
+
+	}
+
+}
+
+@media (max-width: $lt) {
+
+	.player .volume-slide {
+
+		top: ($controls-height - $icon-size) / 3 - $icon-padding--little - 1px;
+
+		width: 100px;
+
+	}
+
+}
+
+.player.show-volume .volume-slide {
+
+	opacity: 1;
+
+}
+
+
+
+.player .volume-slide__wrap {
+
+	position: absolute;
+	bottom: 24px;
+	left: 5%;
+
+	width: 90%;
+	height: $volume-slide-height;
+
+	background: rgba(255, 255, 255, 0.3);
+
+	@include transition(.15s);
+
+}
+
+
+.player .volume-slide__bar {
+
+	position: absolute;
+	z-index: 2;
+
+	display: block;
+	height: 100%;
+
+	background: $blue;
+
+	@include border-radius($volume-slide-height / 2);
+	@include transition(.15s);
+
+}
+
+
+.player .volume-slide__dot {
+
+	position: absolute;
+	top: 2px;
+	z-index: 2;
+
+	display: block;
+	width: $volume-slide__dot-size;
+	height: $volume-slide__dot-size;
+	margin-top: -($volume-slide__dot-size / 2);
+	margin-left: -($volume-slide__dot-size / 2);
+
+	background: white;
+
+	@include border-radius;
+	@include transition(#{"all .3s cubic-bezier(0, 1.8, 1, 1.8), left .15s ease"});
+
+}
+
+.player .volume-slide:hover .volume-slide__dot {
+
+	width: $volume-slide__dot-size--big;
+	height: $volume-slide__dot-size--big;
+	margin-top: -($volume-slide__dot-size--big / 2);
+	margin-left: -($volume-slide__dot-size--big / 2);
+
+}
+
+.player .volume-slide--clicking .volume-slide__bar,
+.player .volume-slide--clicking .volume-slide__dot {
+
+	-webkit-transition: 0!important;
+	   -moz-transition: 0!important;
+			transition: 0!important;
+
+}

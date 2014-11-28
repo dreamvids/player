@@ -15,8 +15,6 @@ DreamPlayer.prototype.insert = function() {
 
 		var video = document.createElement("video");
 
-		video.volume = 0;
-
 		video.setAttribute("autoplay", "");
 		video.setAttribute("autobuffer", "");
 		video.setAttribute("x-webkit-airplay", "allow");
@@ -79,23 +77,47 @@ DreamPlayer.prototype.insert = function() {
 		var icons = document.createElement("div");
 		icons.className = "icons";
 
-			var settings = document.createElement("div");
-			// settings.className = "icon icon--settings";
-			elements["settings"] = settings;
+			var volume = document.createElement("div");
+			volume.className = "icon icon--volume";
+			elements["volumeIcon"] = volume;
 	
-			var settings2 = document.createElement("div");
-			settings2.className = "icon icon--settings";
-			elements["settings2"] = settings2;
+			var settings = document.createElement("div");
+			settings.className = "icon icon--settings";
+			elements["settings"] = settings;
 	
 			var fullscreen = document.createElement("div");
 			fullscreen.className = "icon icon--fullscreen";
 			elements["fullscreen"] = fullscreen;
 	
 		icons.appendChild(fullscreen);
-		icons.appendChild(settings2);
 		icons.appendChild(settings);
+		icons.appendChild(volume);
 
 	player.appendChild(icons);
+
+		var volumeSlide = document.createElement("div");
+		volumeSlide.className = "volume-slide";
+
+		var volumeSlideWrap = document.createElement("div");
+		volumeSlideWrap.className = "volume-slide__wrap";
+		volumeSlide.appendChild(volumeSlideWrap);
+
+			var volumeSlideBar = document.createElement("div");
+			volumeSlideBar.className = "volume-slide__bar";
+			volumeSlideBar.style.width = "0%";
+		
+			var volumeSlideDot = document.createElement("div");
+			volumeSlideDot.className = "volume-slide__dot";
+			volumeSlideDot.style.left = "0%";
+
+		volumeSlideWrap.appendChild(volumeSlideBar);
+		volumeSlideWrap.appendChild(volumeSlideDot);
+
+		elements["volumeSlide"] = volumeSlide;
+		elements["volumeSlide"]["bar"] = volumeSlideBar;
+		elements["volumeSlide"]["dot"] = volumeSlideDot;
+
+	player.appendChild(volumeSlide);
 
 		var controls = document.createElement("div");
 		controls.className = "controls";

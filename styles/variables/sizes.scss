@@ -21,12 +21,13 @@ $controls-height:         92px;
 $controls-height--little: 62px;
 
 
-$icon-size: 28px;
-$icon-padding:         18px;
+$icon-size: 30px;
+$icon-padding:         16px;
 $icon-padding--little:  8px;
 
-$icon-size--big:         64px;
-$icon-size--big--little: 52px;
+$icon-size--big:           64px;
+$icon-size--big--little:   52px;
+$icon-size--big--littttle: 42px;
 
 
 $progress-bar-height:       4px;
@@ -34,3 +35,10 @@ $progress-bar-height--big: 12px;
 
 $progress-bar__current-size:      10px;
 $progress-bar__current-size--big: 18px;
+
+
+$volume-slide-height:       4px;
+$volume-slide-height--big: 12px;
+
+$volume-slide__dot-size:      10px;
+$volume-slide__dot-size--big: 18px;

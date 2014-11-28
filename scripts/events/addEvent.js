@@ -22,21 +22,25 @@ DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
 			};
 
-			for (var e = 0; e < this.events[i].events.length; e++) {
+			if (cible) {
 
-				push.events.push(this.events[i].events[e]);
-
-				cible.addEventListener(this.events[i].events[e], this.onEvent, false);
+				for (var e = 0; e < this.events[i].events.length; e++) {
+	
+					push.events.push(this.events[i].events[e]);
+	
+					cible.addEventListener(this.events[i].events[e], this.onEvent, false);
+	
+				}
+	
+				if (!cible.eventsListeners) {
+	
+					cible.eventsListeners = [];
+	
+				}
+	
+				cible.eventsListeners.push(push);
 
 			}
-
-			if (!cible.eventsListeners) {
-
-				cible.eventsListeners = [];
-
-			}
-
-			cible.eventsListeners.push(push);
 
 		}
 

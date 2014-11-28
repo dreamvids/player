@@ -27,10 +27,12 @@ DreamPlayer.prototype.timeTo = function(time) {
 
 DreamPlayer.prototype.changeTime = function(event) {
 
+	var pageX = event.touches ? event.touches[0].pageX : event.pageX;
+
 	var progressBar = this.elements.progressBar,
 		width = progressBar.offsetWidth;
 
-	var x = Math.max(Math.min(event.pageX - DreamPlayer.getOffsets(progressBar).left, width), 0);
+	var x = Math.max(Math.min(pageX - DreamPlayer.getOffsets(progressBar).left, width), 0);
 
 	var percent = x / width * 100,
 		time = percent / 100 * this.elements.video.duration;
@@ -70,6 +72,20 @@ DreamPlayer.prototype.setProgressBar = function() {
 
 
 	this.addEvent("mousedown", "progressBar", function(event, player) {
+
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+
+			player.progressBarClicking = true;
+
+			DreamPlayer.addClass(player.elements.progressBar, "progress-bar--clicking");
+
+			player.changeTime.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("touchstart", "progressBar", function(event, player) {
 
 		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 

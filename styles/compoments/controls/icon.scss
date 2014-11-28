@@ -18,7 +18,14 @@
 
 	@include transition(opacity 0.8s);
 
-	-webkit-tap-highlight-color: transparentize(white, .8);
+	-webkit-tap-highlight-color: transparent;
+
+}
+
+.player .icon--volume {
+
+	background-image: url(../assets/images/player/volume.png);
+	background-size: $icon-size * 3 $icon-size;
 
 }
 
@@ -35,6 +42,7 @@
 
 }
 
+.player.muted .icon--volume,
 .player.fullscreen .icon--fullscreen {
 
 	background-position: ($icon-padding - $icon-size * 2) $icon-padding;
@@ -52,6 +60,13 @@
 
 		background-position: $icon-padding--little $icon-padding--little;
 		
+	}
+
+	.player.muted .icon--volume,
+	.player.fullscreen .icon--fullscreen {
+
+		background-position: ($icon-padding--little - $icon-size * 2) $icon-padding--little;
+
 	}
 
 }

@@ -37,6 +37,7 @@ var DreamPlayer = function(settings) {
 	this.setProgressBar();
 	this.setSpinner();
 	this.setFullscreen();
+	this.setVolume();
 
 	this.setControls();
 
@@ -134,8 +135,6 @@ DreamPlayer.prototype.insert = function() {
 
 		var video = document.createElement("video");
 
-		video.volume = 0;
-
 		video.setAttribute("autoplay", "");
 		video.setAttribute("autobuffer", "");
 		video.setAttribute("x-webkit-airplay", "allow");
@@ -198,23 +197,47 @@ DreamPlayer.prototype.insert = function() {
 		var icons = document.createElement("div");
 		icons.className = "icons";
 
-			var settings = document.createElement("div");
-			// settings.className = "icon icon--settings";
-			elements["settings"] = settings;
+			var volume = document.createElement("div");
+			volume.className = "icon icon--volume";
+			elements["volumeIcon"] = volume;
 	
-			var settings2 = document.createElement("div");
-			settings2.className = "icon icon--settings";
-			elements["settings2"] = settings2;
+			var settings = document.createElement("div");
+			settings.className = "icon icon--settings";
+			elements["settings"] = settings;
 	
 			var fullscreen = document.createElement("div");
 			fullscreen.className = "icon icon--fullscreen";
 			elements["fullscreen"] = fullscreen;
 	
 		icons.appendChild(fullscreen);
-		icons.appendChild(settings2);
 		icons.appendChild(settings);
+		icons.appendChild(volume);
 
 	player.appendChild(icons);
+
+		var volumeSlide = document.createElement("div");
+		volumeSlide.className = "volume-slide";
+
+		var volumeSlideWrap = document.createElement("div");
+		volumeSlideWrap.className = "volume-slide__wrap";
+		volumeSlide.appendChild(volumeSlideWrap);
+
+			var volumeSlideBar = document.createElement("div");
+			volumeSlideBar.className = "volume-slide__bar";
+			volumeSlideBar.style.width = "0%";
+		
+			var volumeSlideDot = document.createElement("div");
+			volumeSlideDot.className = "volume-slide__dot";
+			volumeSlideDot.style.left = "0%";
+
+		volumeSlideWrap.appendChild(volumeSlideBar);
+		volumeSlideWrap.appendChild(volumeSlideDot);
+
+		elements["volumeSlide"] = volumeSlide;
+		elements["volumeSlide"]["bar"] = volumeSlideBar;
+		elements["volumeSlide"]["dot"] = volumeSlideDot;
+
+	player.appendChild(volumeSlide);
 
 		var controls = document.createElement("div");
 		controls.className = "controls";
@@ -333,21 +356,25 @@ DreamPlayer.prototype.addEvent = function(name, cible, callback) {
 
 			};
 
-			for (var e = 0; e < this.events[i].events.length; e++) {
+			if (cible) {
 
-				push.events.push(this.events[i].events[e]);
-
-				cible.addEventListener(this.events[i].events[e], this.onEvent, false);
+				for (var e = 0; e < this.events[i].events.length; e++) {
+	
+					push.events.push(this.events[i].events[e]);
+	
+					cible.addEventListener(this.events[i].events[e], this.onEvent, false);
+	
+				}
+	
+				if (!cible.eventsListeners) {
+	
+					cible.eventsListeners = [];
+	
+				}
+	
+				cible.eventsListeners.push(push);
 
 			}
-
-			if (!cible.eventsListeners) {
-
-				cible.eventsListeners = [];
-
-			}
-
-			cible.eventsListeners.push(push);
 
 		}
 
@@ -455,8 +482,23 @@ DreamPlayer.events = [
 	},
 
 	{
+		name: "mouseOver",
+		events: ["mouseover"]
+	},
+
+	{
 		name: "mouseOut",
 		events: ["mouseout"]
+	},
+
+	{
+		name: "touchstart",
+		events: ["touchstart"]
+	},
+
+	{
+		name: "touchmove",
+		events: ["touchmove"]
 	},
 
 	{
@@ -631,6 +673,8 @@ DreamPlayer.prototype.hideControls = function() {
 		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
 		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");
 
+		this.removeClass("show-volume");
+
 	}
 
 };
@@ -723,6 +767,22 @@ DreamPlayer.prototype.toggleFullscreen = function() {
 
 }
 
+DreamPlayer.prototype.fullscreenChange = function(player) {
+
+	if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+
+		this.addClass("fullscreen");
+
+	}
+
+	else {
+
+		this.removeClass("fullscreen");
+
+	}
+
+}
+
 DreamPlayer.prototype.setFullscreen = function() {
 
 	this.addEvent("dblclick", "video", function(event, player) {
@@ -736,6 +796,36 @@ DreamPlayer.prototype.setFullscreen = function() {
 		player.toggleFullscreen();
 
 	});
+
+	document.addEventListener("webkitfullscreenchange", function(player) {
+	
+		return function(parameters) {
+	
+			player.fullscreenChange(player);
+	
+		};
+	
+	}(this), false);
+
+	document.addEventListener("mozfullscreenchange", function(player) {
+	
+		return function(parameters) {
+	
+			player.fullscreenChange(player);
+	
+		};
+	
+	}(this), false);
+
+	document.addEventListener("fullscreenchange", function(player) {
+	
+		return function(parameters) {
+	
+			player.fullscreenChange(player);
+	
+		};
+	
+	}(this), false);      
 
 };
 
@@ -751,6 +841,7 @@ DreamPlayer.prototype.setPlayPause = function() {
 
 		if (!isTouch) {
 
+			player.showControls();
 			player.tooglePlayPause();
 
 		}
@@ -895,10 +986,12 @@ DreamPlayer.prototype.timeTo = function(time) {
 
 DreamPlayer.prototype.changeTime = function(event) {
 
+	var pageX = event.touches ? event.touches[0].pageX : event.pageX;
+
 	var progressBar = this.elements.progressBar,
 		width = progressBar.offsetWidth;
 
-	var x = Math.max(Math.min(event.pageX - DreamPlayer.getOffsets(progressBar).left, width), 0);
+	var x = Math.max(Math.min(pageX - DreamPlayer.getOffsets(progressBar).left, width), 0);
 
 	var percent = x / width * 100,
 		time = percent / 100 * this.elements.video.duration;
@@ -938,6 +1031,20 @@ DreamPlayer.prototype.setProgressBar = function() {
 
 
 	this.addEvent("mousedown", "progressBar", function(event, player) {
+
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+
+			player.progressBarClicking = true;
+
+			DreamPlayer.addClass(player.elements.progressBar, "progress-bar--clicking");
+
+			player.changeTime.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("touchstart", "progressBar", function(event, player) {
 
 		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
 
@@ -1044,6 +1151,207 @@ DreamPlayer.prototype.setSpinner = function() {
 };
 
 /**
+ * interactions/volume.js
+ *
+ * Intéraction volume.
+ */
+
+DreamPlayer.prototype.volume = function(volume) {
+
+	this.elements.volumeSlide.bar.style.width = volume * 100 + "%";
+	this.elements.volumeSlide.dot.style.left = volume * 100 + "%";
+
+	if (volume > 1) {
+
+		volume = 1;
+
+	}
+
+	else if (volume < 0) {
+
+		volume = 0;
+
+	}
+
+	this.elements.video.volume = volume;
+
+	if (volume <= 0.05) {
+
+		this.addClass("muted");
+
+	}
+
+	else {
+
+		this.removeClass("muted");
+
+	}
+
+};
+
+DreamPlayer.prototype.changeVolume = function(event) {
+
+	var pageX = event.touches ? event.touches[0].pageX : event.pageX;
+
+	var volumeSlide = this.elements.volumeSlide,
+		width = volumeSlide.offsetWidth;
+
+	var x = Math.max(Math.min(pageX - DreamPlayer.getOffsets(volumeSlide).left, width), 0);
+
+	var volume = x / width;
+
+	console.log(volume);
+
+	if (!isNaN(volume)) {
+
+		this.elements.volumeSlide.bar.style.width = (volume * 100) + "%";
+
+		this.volume(volume);
+
+	}
+
+};
+
+DreamPlayer.prototype.hideVolume = function() {
+
+	if (this.hideVolumeTimeout) {
+
+		clearTimeout(this.hideVolumeTimeout);
+
+	}
+
+	this.hideVolumeTimeout = setTimeout(function(player) {
+	
+		return function() {
+	
+			player.removeClass("show-volume");
+	
+		};
+	
+	}(this), 3500);
+
+};
+
+DreamPlayer.prototype.setVolume = function() {
+
+	this.volume(this.settings.volume);
+
+	this.addEvent("click", "volumeIcon", function(event, player) {
+
+		if ((" " + player.elements.player.className + " ").search(" show-volume ") >= 0) {
+
+			player.hideVolume();
+
+			player.removeClass("show-volume");
+
+		}
+
+		else {
+
+			clearTimeout(this.hideVolumeTimeout);
+
+			player.addClass("show-volume");
+
+		}
+
+	});
+
+	this.addEvent("mouseOver", "volumeIcon", function(event, player) {
+
+		clearTimeout(this.hideVolumeTimeout);
+
+		player.addClass("show-volume");
+
+	});
+
+	this.addEvent("mouseout", "volumeIcon", function(event, player) {
+
+		player.hideVolume();
+
+	});
+
+	this.addEvent("mouseover", "volumeSlide", function(event, player) {
+
+		clearTimeout(this.hideVolumeTimeout);
+
+		player.addClass("show-volume");
+
+	});
+
+	this.addEvent("mousemove", "volumeSlide", function(event, player) {
+
+		clearTimeout(this.hideVolumeTimeout);
+
+		player.addClass("show-volume");
+
+	});
+
+
+	this.addEvent("mousedown", "volumeSlide", function(event, player) {
+
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+
+			player.volumeSlideClicking = true;
+
+			DreamPlayer.addClass(player.elements.volumeSlide, "volume-slide--clicking");
+
+			player.changeVolume.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("touchstart", "volumeSlide", function(event, player) {
+
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0) {
+
+			player.volumeSlideClicking = true;
+
+			DreamPlayer.addClass(player.elements.volumeSlide, "volume-slide--clicking");
+
+			player.changeVolume.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("mouseup", document.body, function(event, player) {
+
+		if ((" " + player.elements.controls.className + " ").search(" show ") >= 0 && player.volumeSlideClicking) {
+
+			player.volumeSlideClicking = false;
+
+			DreamPlayer.removeClass(player.elements.volumeSlide, "volume-slide--clicking");
+
+			player.changeVolume.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("mousemove", "player", function(event, player) {
+
+		if (player.volumeSlideClicking) {
+
+			player.changeVolume.call(player, event);
+
+		}
+
+	});
+
+	this.addEvent("touchmove", "player", function(event, player) {
+
+		if (player.volumeSlideClicking) {
+
+			player.changeVolume.call(player, event);
+
+		}
+
+	});
+
+};
+
+/**
  *	object/settings.js
  *
  *	Parsage des paramètres du player.
@@ -1062,6 +1370,7 @@ DreamPlayer.settings = function(settings) {
 	var returns = {
 
 		debug: settings.debug ? settings.debug : false,
+		volume: settings.volume || 1,
 		poster: settings.poster,
 		cible: settings.cible,
 		sources: []

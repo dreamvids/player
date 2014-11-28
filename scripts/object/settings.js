@@ -18,6 +18,7 @@ DreamPlayer.settings = function(settings) {
 	var returns = {
 
 		debug: settings.debug ? settings.debug : false,
+		volume: settings.volume || 1,
 		poster: settings.poster,
 		cible: settings.cible,
 		sources: []

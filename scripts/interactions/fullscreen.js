@@ -87,6 +87,22 @@ DreamPlayer.prototype.toggleFullscreen = function() {
 
 }
 
+DreamPlayer.prototype.fullscreenChange = function(player) {
+
+	if (document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement) {
+
+		this.addClass("fullscreen");
+
+	}
+
+	else {
+
+		this.removeClass("fullscreen");
+
+	}
+
+}
+
 DreamPlayer.prototype.setFullscreen = function() {
 
 	this.addEvent("dblclick", "video", function(event, player) {
@@ -100,5 +116,35 @@ DreamPlayer.prototype.setFullscreen = function() {
 		player.toggleFullscreen();
 
 	});
+
+	document.addEventListener("webkitfullscreenchange", function(player) {
+	
+		return function(parameters) {
+	
+			player.fullscreenChange(player);
+	
+		};
+	
+	}(this), false);
+
+	document.addEventListener("mozfullscreenchange", function(player) {
+	
+		return function(parameters) {
+	
+			player.fullscreenChange(player);
+	
+		};
+	
+	}(this), false);
+
+	document.addEventListener("fullscreenchange", function(player) {
+	
+		return function(parameters) {
+	
+			player.fullscreenChange(player);
+	
+		};
+	
+	}(this), false);      
 
 };

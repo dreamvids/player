@@ -99,8 +99,23 @@ DreamPlayer.events = [
 	},
 
 	{
+		name: "mouseOver",
+		events: ["mouseover"]
+	},
+
+	{
 		name: "mouseOut",
 		events: ["mouseout"]
+	},
+
+	{
+		name: "touchstart",
+		events: ["touchstart"]
+	},
+
+	{
+		name: "touchmove",
+		events: ["touchmove"]
 	},
 
 	{

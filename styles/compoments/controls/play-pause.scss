@@ -32,12 +32,6 @@
 
 }
 
-.player .play-pause__svg {
-
-	
-
-}
-
 @media (max-width: $sm) {
 
 	.player .play-pause {
@@ -48,6 +42,21 @@
 		margin-top: -$icon-size--big--little / 2;
 
 		background-size: $icon-size--big--little * 2 $icon-size--big--little;
+		
+	}
+
+}
+
+@media (max-width: $xs) {
+
+	.player .play-pause {
+
+		width: $icon-size--big--littttle;
+		height: $icon-size--big--littttle;
+		margin-left: -$icon-size--big--littttle / 2;
+		margin-top: -$icon-size--big--littttle / 2;
+
+		background-size: $icon-size--big--littttle * 2 $icon-size--big--littttle;
 		
 	}
 

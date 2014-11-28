@@ -11,6 +11,7 @@ DreamPlayer.prototype.setPlayPause = function() {
 
 		if (!isTouch) {
 
+			player.showControls();
 			player.tooglePlayPause();
 
 		}

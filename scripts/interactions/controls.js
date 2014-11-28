@@ -108,6 +108,8 @@ DreamPlayer.prototype.hideControls = function() {
 		this.elements.controls.className = (" " + this.elements.controls.className + " ").replace("show", "");
 		this.elements.player.className = (" " + this.elements.player.className + " ").replace("show-settings", "");
 
+		this.removeClass("show-volume");
+
 	}
 
 };
