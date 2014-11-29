@@ -74,6 +74,12 @@ DreamPlayer.prototype.insert = function() {
 
 	player.appendChild(playPause);
 
+		var qualitys = document.createElement("div");
+		qualitys.className = "qualitys";
+		elements["qualitys"] = qualitys;
+
+	player.appendChild(qualitys);
+
 		var icons = document.createElement("div");
 		icons.className = "icons";
 

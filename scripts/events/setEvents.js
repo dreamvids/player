@@ -74,6 +74,11 @@ DreamPlayer.prototype.setEvents = function() {
 DreamPlayer.events = [
 
 	{
+		name: "loadeddata",
+		events: ["loadeddata"]
+	},
+
+	{
 		name: "click",
 		events: ["click"]
 	},

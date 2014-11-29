@@ -38,6 +38,7 @@ var DreamPlayer = function(settings) {
 	this.setSpinner();
 	this.setFullscreen();
 	this.setVolume();
+	this.setQualitys();
 
 	this.setControls();
 

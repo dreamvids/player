@@ -38,6 +38,7 @@ var DreamPlayer = function(settings) {
 	this.setSpinner();
 	this.setFullscreen();
 	this.setVolume();
+	this.setQualitys();
 
 	this.setControls();
 
@@ -193,6 +194,12 @@ DreamPlayer.prototype.insert = function() {
 		elements["playPause"] = playPause;
 
 	player.appendChild(playPause);
+
+		var qualitys = document.createElement("div");
+		qualitys.className = "qualitys";
+		elements["qualitys"] = qualitys;
+
+	player.appendChild(qualitys);
 
 		var icons = document.createElement("div");
 		icons.className = "icons";
@@ -455,6 +462,11 @@ DreamPlayer.prototype.setEvents = function() {
 };
 
 DreamPlayer.events = [
+
+	{
+		name: "loadeddata",
+		events: ["loadeddata"]
+	},
 
 	{
 		name: "click",
@@ -1095,6 +1107,102 @@ DreamPlayer.prototype.setProgressBar = function() {
 };
 
 /**
+ * interactions/qualitys.js
+ *
+ * Intéraction qualités.
+ */
+
+DreamPlayer.prototype.toggleQualitys = function() {
+
+	if ((" " + this.elements.player.className + " ").search("show-qualitys") > -1) {
+
+		this.hideQualitys();
+
+	}
+
+	else {
+
+		this.showQualitys();
+
+	}
+
+};
+
+DreamPlayer.prototype.showQualitys = function() {
+
+	this.elements.qualitys.style.display = "block";
+
+	this.addClass("show-qualitys");
+
+};
+
+DreamPlayer.prototype.hideQualitys = function() {
+
+	this.removeClass("show-qualitys");
+
+	setTimeout(function(player, element) {
+	
+		return function() {
+
+			if ((" " + player.className + " ").search("show-qualitys") === -1) {
+
+				element.style.display = "none";
+
+			}
+	
+		};
+	
+	}(this.elements.player, this.elements.qualitys), 500);
+
+};
+
+DreamPlayer.prototype.setQualitys = function() {
+
+	this.volume(this.settings.volume);
+
+	this.addEvent("click", "settings", function(event, player) {
+
+		player.toggleQualitys();
+
+	});
+
+	for (var i = 0; i < this.settings.sources.length; i++) {
+
+		var quality = document.createElement("div");
+		quality.className = "quality";
+		quality.innerHTML = this.settings.sources[i].text;
+		quality.setAttribute("data-format", this.settings.sources[i].format);
+		this.elements.qualitys.appendChild(quality);
+		this.elements["quality" + this.settings.sources[i].format] = quality;
+
+		this.addEvent("click", "quality" + this.settings.sources[i].format, function(i) {
+		
+			return function(event, player) {
+
+				player.hideQualitys();
+				player.setSource(i);
+
+			};
+		
+		}(i));
+
+	}
+
+	this.addEvent("loadeddata", "video", function(event, player) {
+	
+		if (player.lastTime) {
+
+			player.elements.video.currentTime = player.lastTime;
+
+			player.lastTime = null;
+
+		}
+	
+	});
+
+};
+
+/**
  *	interactions/spinner.js
  *
  *	Spinner loader.
@@ -1199,8 +1307,6 @@ DreamPlayer.prototype.changeVolume = function(event) {
 	var x = Math.max(Math.min(pageX - DreamPlayer.getOffsets(volumeSlide).left, width), 0);
 
 	var volume = x / width;
-
-	console.log(volume);
 
 	if (!isNaN(volume)) {
 
@@ -1394,6 +1500,7 @@ DreamPlayer.settings = function(settings) {
 			returns.sources.push({
 
 				format: source.format,
+				text: source.text,
 				mp4: source.mp4,
 				webm: source.webm
 
@@ -1440,6 +1547,25 @@ DreamPlayer.prototype.loadSources = function() {
 	if (this.settings.debug) {
 
 		console.info("format", this.settings.sources[selection].format);
+
+	}
+
+	this.currentSource = selection;
+
+};
+
+DreamPlayer.prototype.setSource = function(id) {
+
+	if (id !== this.currentSource) {
+
+		this.lastTime = this.elements.video.currentTime;
+
+		this.elements.srcMp4.src = this.settings.sources[id].mp4;
+		this.elements.srcWebm.src = this.settings.sources[id].webm;
+
+		this.elements.video.load();
+
+		this.currentSource = id;
 
 	}
 

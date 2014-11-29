@@ -49,8 +49,6 @@ DreamPlayer.prototype.changeVolume = function(event) {
 
 	var volume = x / width;
 
-	console.log(volume);
-
 	if (!isNaN(volume)) {
 
 		this.elements.volumeSlide.bar.style.width = (volume * 100) + "%";

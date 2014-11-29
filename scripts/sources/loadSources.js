@@ -35,4 +35,23 @@ DreamPlayer.prototype.loadSources = function() {
 
 	}
 
+	this.currentSource = selection;
+
+};
+
+DreamPlayer.prototype.setSource = function(id) {
+
+	if (id !== this.currentSource) {
+
+		this.lastTime = this.elements.video.currentTime;
+
+		this.elements.srcMp4.src = this.settings.sources[id].mp4;
+		this.elements.srcWebm.src = this.settings.sources[id].webm;
+
+		this.elements.video.load();
+
+		this.currentSource = id;
+
+	}
+
 };

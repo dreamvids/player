@@ -105,6 +105,9 @@
   transition: opacity 0.8s;
   -webkit-tap-highlight-color: transparent; }
 
+.player.show-qualitys .play-pause {
+  opacity: 0 !important; }
+
 .player .play-pause--svg {
   background: none; }
 
@@ -194,6 +197,69 @@
   -webkit-transition: opacity 0.2s;
   -moz-transition: opacity 0.2s;
   transition: opacity 0.2s; }
+
+/* PLAYER QUALITY
+   ============================= */
+.player .qualitys {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: none;
+  height: 96px;
+  opacity: 0;
+  cursor: pointer;
+  text-align: center;
+  -webkit-transition: opacity 0.5s;
+  -moz-transition: opacity 0.5s;
+  transition: opacity 0.5s; }
+
+.player.show-qualitys .qualitys {
+  opacity: 1;
+  -webkit-transition: opacity 0.2s;
+  -moz-transition: opacity 0.2s;
+  transition: opacity 0.2s; }
+
+.player .qualitys .quality {
+  display: inline-block;
+  width: 192px;
+  height: 96px;
+  margin: -48px 48px;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 96px;
+  color: white;
+  text-align: center;
+  line-height: 1;
+  text-shadow: 0 0 16px rgba(0, 0, 0, 0.6);
+  -webkit-tap-highlight-color: transparent; }
+
+.player .qualitys .quality--svg {
+  background: none; }
+
+@media (max-width: 768px) {
+  .player .qualitys .quality {
+    width: 129px;
+    height: 86px;
+    margin: -43px 43px;
+    font-size: 86px; }
+ }
+
+@media (max-width: 480px) {
+  .player .qualitys .quality {
+    width: 72px;
+    height: 48px;
+    margin: -24px 24px;
+    font-size: 48px; }
+ }
+
+.player.playing .qualitys .quality {
+  background-position: -96px 0; }
+
+@media (max-width: 768px) {
+  .player.playing .qualitys .quality {
+    background-position: -86px 0; }
+ }
 
 /* PROGRESS BAR
    ============================= */

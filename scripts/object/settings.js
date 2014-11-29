@@ -42,6 +42,7 @@ DreamPlayer.settings = function(settings) {
 			returns.sources.push({
 
 				format: source.format,
+				text: source.text,
 				mp4: source.mp4,
 				webm: source.webm
 
