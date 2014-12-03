@@ -7,6 +7,12 @@
 
 DreamPlayer.prototype.volume = function(volume) {
 
+	if (!volume) {
+
+		var volume = 1;
+
+	}
+
 	this.elements.volumeSlide.bar.style.width = volume * 100 + "%";
 	this.elements.volumeSlide.dot.style.left = volume * 100 + "%";
 
@@ -34,6 +40,26 @@ DreamPlayer.prototype.volume = function(volume) {
 
 		this.removeClass("muted");
 
+	}
+
+};
+
+DreamPlayer.prototype.sendVolume = function() {
+
+	if (_logged_) {
+
+		marmottajax.put({
+
+			url: _webroot_ + "account/volume",
+
+			options: {
+
+				volume: this.elements.video.volume
+
+			}
+
+		});
+		
 	}
 
 };
@@ -171,6 +197,8 @@ DreamPlayer.prototype.setVolume = function() {
 			DreamPlayer.removeClass(player.elements.volumeSlide, "volume-slide--clicking");
 
 			player.changeVolume.call(player, event);
+
+			player.sendVolume();
 
 		}
 

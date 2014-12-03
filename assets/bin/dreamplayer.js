@@ -1266,6 +1266,12 @@ DreamPlayer.prototype.setSpinner = function() {
 
 DreamPlayer.prototype.volume = function(volume) {
 
+	if (!volume) {
+
+		var volume = 1;
+
+	}
+
 	this.elements.volumeSlide.bar.style.width = volume * 100 + "%";
 	this.elements.volumeSlide.dot.style.left = volume * 100 + "%";
 
@@ -1293,6 +1299,26 @@ DreamPlayer.prototype.volume = function(volume) {
 
 		this.removeClass("muted");
 
+	}
+
+};
+
+DreamPlayer.prototype.sendVolume = function() {
+
+	if (_logged_) {
+
+		marmottajax.put({
+
+			url: _webroot_ + "account/volume",
+
+			options: {
+
+				volume: this.elements.video.volume
+
+			}
+
+		});
+		
 	}
 
 };
@@ -1431,6 +1457,8 @@ DreamPlayer.prototype.setVolume = function() {
 
 			player.changeVolume.call(player, event);
 
+			player.sendVolume();
+
 		}
 
 	});
@@ -1476,7 +1504,8 @@ DreamPlayer.settings = function(settings) {
 	var returns = {
 
 		debug: settings.debug ? settings.debug : false,
-		volume: settings.volume || 1,
+		source: typeof settings.source !== "undefined" ? settings.source : 1,
+		volume: typeof settings.volume !== "undefined" ? settings.volume : 1,
 		poster: settings.poster,
 		cible: settings.cible,
 		sources: []
@@ -1515,17 +1544,17 @@ DreamPlayer.settings = function(settings) {
 };
 
 /**
- *	sources/loadSources.js
+ *	sources/load-sources.js
  *
  *	Chargement des sources de la vidéo.
  */
 
 DreamPlayer.prototype.loadSources = function() {
 
-	var selection = "none",
+	var selection = 0,
 		marge = 80;
 
-	for (var i = 0; i < this.settings.sources.length; i++) {
+	/*for (var i = 0; i < this.settings.sources.length; i++) {
 
 		if (this.elements.player.offsetWidth - this.settings.sources[i].format > 0) {
 
@@ -1533,11 +1562,11 @@ DreamPlayer.prototype.loadSources = function() {
 
 		}
 
-	}
+	}*/
 
-	if (selection == "none") {
+	if (typeof this.settings.source !== "undefined") {
 
-		selection = 0;
+		selection = this.settings.source;
 
 	}
 
@@ -1566,6 +1595,22 @@ DreamPlayer.prototype.setSource = function(id) {
 		this.elements.video.load();
 
 		this.currentSource = id;
+
+		if (_logged_) {
+
+			marmottajax.put({
+
+				url: _webroot_ + "account/definition",
+
+				options: {
+
+					definition: id
+
+				}
+
+			});
+			
+		}
 
 	}
 

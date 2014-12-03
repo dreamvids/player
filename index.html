@@ -5,7 +5,7 @@
 
         <title>DP dev WorkFlow</title>
 
-        <link rel="stylesheet" href="bin/dreamplayer.min.css">
+        <link rel="stylesheet" href="assets/bin/dreamplayer.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <style>
@@ -67,17 +67,22 @@
 
         </div>
 
-        <script src="bin/dreamplayer.js"></script>
+        <script src="assets/marmottajax.min.js"></script>
+        <script src="assets/bin/dreamplayer.js"></script>
 
         <script>
 
-            var player = new DreamPlayer({
+            var _webroot_ = "",
+                _logged_ = true;
+
+            new DreamPlayer({
 
                 debug: true,
 
                 cible: document.getElementById("player"),
                 poster: "https://i.vimeocdn.com/video/494373548.webp?mw=960",
 
+                source: 1, // 0 = 360, 1 = 720, 2 = [...]
                 volume: .8,
 
                 sources: [

@@ -94,7 +94,7 @@
   height: 64px;
   margin-left: -32px;
   margin-top: -32px;
-  background: url(../assets/images/player/play-pause.png);
+  background: url(../images/player/play-pause.png);
   background-size: 128px 64px;
   background-position: 0 0;
   background-repeat: no-repeat;
@@ -168,14 +168,14 @@
   -webkit-tap-highlight-color: transparent; }
 
 .player .icon--volume {
-  background-image: url(../assets/images/player/volume.png);
+  background-image: url(../images/player/volume.png);
   background-size: 90px 30px; }
 
 .player .icon--settings {
-  background-image: url(../assets/images/player/settings.png); }
+  background-image: url(../images/player/settings.png); }
 
 .player .icon--fullscreen {
-  background-image: url(../assets/images/player/fullscreen.png);
+  background-image: url(../images/player/fullscreen.png);
   background-size: 90px 30px; }
 
 .player.muted .icon--volume, .player.fullscreen .icon--fullscreen {

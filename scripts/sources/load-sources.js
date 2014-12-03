@@ -1,16 +1,16 @@
 
 /**
- *	sources/loadSources.js
+ *	sources/load-sources.js
  *
  *	Chargement des sources de la vidéo.
  */
 
 DreamPlayer.prototype.loadSources = function() {
 
-	var selection = "none",
+	var selection = 0,
 		marge = 80;
 
-	for (var i = 0; i < this.settings.sources.length; i++) {
+	/*for (var i = 0; i < this.settings.sources.length; i++) {
 
 		if (this.elements.player.offsetWidth - this.settings.sources[i].format > 0) {
 
@@ -18,11 +18,11 @@ DreamPlayer.prototype.loadSources = function() {
 
 		}
 
-	}
+	}*/
 
-	if (selection == "none") {
+	if (typeof this.settings.source !== "undefined") {
 
-		selection = 0;
+		selection = this.settings.source;
 
 	}
 
@@ -51,6 +51,22 @@ DreamPlayer.prototype.setSource = function(id) {
 		this.elements.video.load();
 
 		this.currentSource = id;
+
+		if (_logged_) {
+
+			marmottajax.put({
+
+				url: _webroot_ + "account/definition",
+
+				options: {
+
+					definition: id
+
+				}
+
+			});
+			
+		}
 
 	}
 

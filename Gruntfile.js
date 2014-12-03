@@ -14,7 +14,7 @@ module.exports = function(grunt) {
 
 				],
 
-				dest: "bin/dreamplayer.js",
+				dest: "assets/bin/dreamplayer.js",
 
 			}
 
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
 
 			dist: {
 
-				files: { "bin/dreamplayer.min.js": [ "bin/dreamplayer.js" ] }
+				files: { "assets/bin/dreamplayer.min.js": [ "assets/bin/dreamplayer.js" ] }
 
 			}
 
@@ -34,7 +34,7 @@ module.exports = function(grunt) {
 
 			dist: {
 
-				files: { "bin/dreamplayer.css": "styles/main.scss" }
+				files: { "assets/bin/dreamplayer.css": "styles/main.scss" }
 
 			}
 
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
 
 			dist: {
 
-				files: { "bin/dreamplayer.min.css": [ "bin/dreamplayer.css" ] }
+				files: { "assets/bin/dreamplayer.min.css": [ "assets/bin/dreamplayer.css" ] }
 
 			}
 
