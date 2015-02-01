@@ -655,7 +655,7 @@ DreamPlayer.prototype.setTimeoutHideControls = function() {
 
 		}
 
-	}, 350000, this);
+	}, 3500, this);
 };
 
 DreamPlayer.prototype.showControls = function() {
