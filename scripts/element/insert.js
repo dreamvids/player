@@ -133,6 +133,14 @@ DreamPlayer.prototype.insert = function() {
 		controlsWrap.className = "controls__wrap";
 		controls.appendChild(controlsWrap);
 		
+			var time = document.createElement("div");
+			time.className = "time";
+			time.innerHTML = "00:00";
+
+			elements["time"] = time;
+			
+		controlsWrap.appendChild(time);
+
 			var progressBar = document.createElement("div");
 			progressBar.className = "progress-bar";
 
