@@ -15,7 +15,12 @@ DreamPlayer.prototype.insert = function() {
 
 		var video = document.createElement("video");
 
-		video.setAttribute("autoplay", "");
+		if (this.settings.autoplay) {
+
+			video.setAttribute("autoplay", "");
+
+		}
+
 		video.setAttribute("autobuffer", "");
 		video.setAttribute("x-webkit-airplay", "allow");
 		video.setAttribute("preload", "auto");

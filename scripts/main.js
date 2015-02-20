@@ -44,17 +44,34 @@ var DreamPlayer = function(settings) {
 
 	this.setControls();
 
-	this.elements.player.style.height = this.elements.player.offsetWidth / (16 / 9) + "px";
+	console.log(this.settings.embed);
 
-	window.addEventListener("resize", function(player) {
+	if (this.settings.embed) {
+
+		this.elements.player.style.height = "100%";
+
+		console.log(this.elements.video);
+		this.elements.video.style.height = "100%";
+
+	}
+
+	else {
+
+		this.elements.player.style.height = this.elements.player.offsetWidth / (16 / 9) + "px";
+
+		window.addEventListener("resize", function(player) {
+		
+			return function() {
+		
+				player.style.height = player.offsetWidth / (16 / 9) + "px";
+		
+			};
+		
+		}(this.elements.player), false);
+
+	}
+
 	
-		return function() {
-	
-			player.style.height = player.offsetWidth / (16 / 9) + "px";
-	
-		};
-	
-	}(this.elements.player), false);
 
 	this.loadSources();
 

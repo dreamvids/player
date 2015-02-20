@@ -23,6 +23,8 @@ DreamPlayer.settings = function(settings) {
 		poster: settings.poster,
 		cible: settings.cible,
 		redirectAtEnd: typeof settings.redirectAtEnd !== "undefined" ? settings.redirectAtEnd : null,
+		embed: typeof settings.embed !== "undefined" ? settings.embed : false,
+		autoplay: typeof settings.autoplay !== "undefined" ? settings.autoplay : true,
 		sources: []
 
 	};

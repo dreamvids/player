@@ -44,17 +44,34 @@ var DreamPlayer = function(settings) {
 
 	this.setControls();
 
-	this.elements.player.style.height = this.elements.player.offsetWidth / (16 / 9) + "px";
+	console.log(this.settings.embed);
 
-	window.addEventListener("resize", function(player) {
+	if (this.settings.embed) {
+
+		this.elements.player.style.height = "100%";
+
+		console.log(this.elements.video);
+		this.elements.video.style.height = "100%";
+
+	}
+
+	else {
+
+		this.elements.player.style.height = this.elements.player.offsetWidth / (16 / 9) + "px";
+
+		window.addEventListener("resize", function(player) {
+		
+			return function() {
+		
+				player.style.height = player.offsetWidth / (16 / 9) + "px";
+		
+			};
+		
+		}(this.elements.player), false);
+
+	}
+
 	
-		return function() {
-	
-			player.style.height = player.offsetWidth / (16 / 9) + "px";
-	
-		};
-	
-	}(this.elements.player), false);
 
 	this.loadSources();
 
@@ -138,7 +155,12 @@ DreamPlayer.prototype.insert = function() {
 
 		var video = document.createElement("video");
 
-		video.setAttribute("autoplay", "");
+		if (this.settings.autoplay) {
+
+			video.setAttribute("autoplay", "");
+
+		}
+
 		video.setAttribute("autobuffer", "");
 		video.setAttribute("x-webkit-airplay", "allow");
 		video.setAttribute("preload", "auto");
@@ -1653,6 +1675,8 @@ DreamPlayer.settings = function(settings) {
 		poster: settings.poster,
 		cible: settings.cible,
 		redirectAtEnd: typeof settings.redirectAtEnd !== "undefined" ? settings.redirectAtEnd : null,
+		embed: typeof settings.embed !== "undefined" ? settings.embed : false,
+		autoplay: typeof settings.autoplay !== "undefined" ? settings.autoplay : true,
 		sources: []
 
 	};
