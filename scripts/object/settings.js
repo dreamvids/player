@@ -22,6 +22,7 @@ DreamPlayer.settings = function(settings) {
 		volume: typeof settings.volume !== "undefined" ? settings.volume : 1,
 		poster: settings.poster,
 		cible: settings.cible,
+		redirectAtEnd: typeof settings.redirectAtEnd !== "undefined" ? settings.redirectAtEnd : null,
 		sources: []
 
 	};

@@ -144,6 +144,11 @@ DreamPlayer.events = [
 	},
 
 	{
+		name: "ended",
+		events: ["ended"]
+	},
+
+	{
 		name: "timeUpdate",
 		events: ["timeupdate"]
 	},

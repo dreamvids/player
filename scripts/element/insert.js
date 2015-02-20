@@ -74,6 +74,22 @@ DreamPlayer.prototype.insert = function() {
 
 	player.appendChild(playPause);
 
+		var redirectMessage = document.createElement("div");
+		redirectMessage.className = "redirect-message";
+		redirectMessage.style.display = "none";
+		redirectMessage.setAttribute("message", "Redirection de la vidéo dans {seconds}");
+		elements["redirectMessage"] = redirectMessage;
+
+	player.appendChild(redirectMessage);
+
+	var redirectCancel = document.createElement("button");
+		redirectCancel.className = "redirect-cancel";
+		redirectCancel.style.display = "none";
+		redirectCancel.innerHTML = "Rester sur cette page";
+		elements["redirectCancel"] = redirectCancel;
+
+	player.appendChild(redirectCancel);
+
 		var qualitys = document.createElement("div");
 		qualitys.className = "qualitys";
 		elements["qualitys"] = qualitys;

@@ -40,6 +40,7 @@ var DreamPlayer = function(settings) {
 	this.setFullscreen();
 	this.setVolume();
 	this.setQualitys();
+	this.setRedirectAtEnd();
 
 	this.setControls();
 
@@ -195,6 +196,22 @@ DreamPlayer.prototype.insert = function() {
 		elements["playPause"] = playPause;
 
 	player.appendChild(playPause);
+
+		var redirectMessage = document.createElement("div");
+		redirectMessage.className = "redirect-message";
+		redirectMessage.style.display = "none";
+		redirectMessage.setAttribute("message", "Redirection de la vidéo dans {seconds}");
+		elements["redirectMessage"] = redirectMessage;
+
+	player.appendChild(redirectMessage);
+
+	var redirectCancel = document.createElement("button");
+		redirectCancel.className = "redirect-cancel";
+		redirectCancel.style.display = "none";
+		redirectCancel.innerHTML = "Rester sur cette page";
+		elements["redirectCancel"] = redirectCancel;
+
+	player.appendChild(redirectCancel);
 
 		var qualitys = document.createElement("div");
 		qualitys.className = "qualitys";
@@ -540,6 +557,11 @@ DreamPlayer.events = [
 	{
 		name: "pause",
 		events: ["pause"]
+	},
+
+	{
+		name: "ended",
+		events: ["ended"]
 	},
 
 	{
@@ -1212,6 +1234,88 @@ DreamPlayer.prototype.setQualitys = function() {
 };
 
 /**
+ * interactions/redirect.js
+ *
+ * Redirection en playlist.
+ */
+
+DreamPlayer.prototype.reviewRedirectTime = function() {
+
+	this.elements.redirectMessage.innerHTML = this.elements.redirectMessage.getAttribute("message").replace("{seconds}", Math.max(Math.round(this.redirectTime / 1000), 0));
+
+	if (this.redirectTime < 10) {
+
+		window.location.href = this.settings.redirectAtEnd;
+
+	}
+
+}
+
+DreamPlayer.prototype.cancelRedirect = function() {
+
+	if (this.redirectInterval) {
+
+		clearInterval(this.redirectInterval);
+
+		this.redirectTime = 5000;
+
+		this.elements.redirectMessage.style.display = "none";
+		this.elements.redirectCancel.style.display = "none";
+
+	}
+
+}
+
+DreamPlayer.prototype.willRedirect = function() {
+
+	this.reviewRedirectTime();
+
+	this.elements.redirectMessage.style.display = "";
+	this.elements.redirectCancel.style.display = "";
+
+	this.redirectInterval = setInterval(function(player) {
+	
+		return function() {
+			
+			player.redirectTime -= 1000;
+
+			player.reviewRedirectTime();
+	
+		};
+	
+	}(this), 1000);
+
+}
+
+DreamPlayer.prototype.setRedirectAtEnd = function() {
+
+	this.redirectTime = 5000;
+
+	if (this.settings.redirectAtEnd) {
+
+		this.addEvent("ended", "video", function(event, player) {
+	
+			player.willRedirect();
+	
+		});
+
+		this.addEvent("play", "video", function(event, player) {
+	
+			player.cancelRedirect();
+	
+		});
+
+		this.addEvent("click", "redirectCancel", function(event, player) {
+	
+			player.cancelRedirect();
+	
+		});
+
+	}  
+
+};
+
+/**
  *	interactions/spinner.js
  *
  *	Spinner loader.
@@ -1548,6 +1652,7 @@ DreamPlayer.settings = function(settings) {
 		volume: typeof settings.volume !== "undefined" ? settings.volume : 1,
 		poster: settings.poster,
 		cible: settings.cible,
+		redirectAtEnd: typeof settings.redirectAtEnd !== "undefined" ? settings.redirectAtEnd : null,
 		sources: []
 
 	};

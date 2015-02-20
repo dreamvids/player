@@ -1,0 +1,97 @@
+
+/* REDIRECT MESSAGE
+   ============================= */
+
+
+$redirect-cancel--width: 220px;
+$redirect-cancel--width--little: 200px;
+$redirect-cancel--padding: 8px;
+$redirect-cancel--padding--little: 8px;
+
+.player .redirect-message {
+
+	position: absolute;
+	top: 62%;
+	left: 0;
+	right: 0;
+
+	padding: 16px;
+
+	background: rgba(0, 0, 0, .2);
+	font-family: sans-serif;
+	font-size: 26px;
+	color: white;
+	cursor: default;
+	text-align: center;
+
+}
+
+.player .redirect-cancel {
+
+	position: absolute;
+	top: 75%;
+	left: 50%;
+
+	width: $redirect-cancel--width;
+	margin-left: -$redirect-cancel--width / 2 - $redirect-cancel--padding;
+	padding: $redirect-cancel--padding;
+
+	background: white;
+	font-family: sans-serif;
+	font-size: 20px;
+	color: black;
+	cursor: pointer;
+	text-align: center;
+	border: none;
+
+	@include border-radius(5px);
+
+}
+
+@media (max-width: $sm) {
+
+	.player .redirect-message {
+
+		top: 20%;
+
+		font-size: 20px;
+
+	}
+
+	.player .redirect-cancel {
+
+		top: 70%;
+
+		width: $redirect-cancel--width--little;
+		margin-left: -$redirect-cancel--width--little / 2 - $redirect-cancel--padding--little;
+		padding: $redirect-cancel--padding--little;
+
+		font-size: 16px;
+
+	}
+
+}
+
+@media (max-width: $xs) {
+
+	.player .redirect-message {
+
+		top: 60%;
+
+		font-size: 18px;
+
+	}
+
+	.player .redirect-cancel {
+
+		display: none;
+
+	}
+
+}
+
+.player .redirect-cancel:focus {
+
+	outline: none;
+
+}
