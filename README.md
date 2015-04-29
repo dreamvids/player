@@ -2,4 +2,4 @@
 
 Espace de développement du player de DreamVids.
 
-![Design](preview.jpg "Design")
+![Design](preview.png "Design")
