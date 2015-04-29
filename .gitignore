@@ -1,7 +1,0 @@
-.sass-cache
-node_modules
-.npm-debug.log
-logs
-*.log
-tmp
-.grunt
