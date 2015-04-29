@@ -1,0 +1,5 @@
+{
+  "name": "Player",
+  "main": "Player.js",
+  "private": true
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+	<head>
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+		<title>player</title>
+
+		<link rel="stylesheet" href="lib/player.css">
+
+		<script src="assets/bin/librairies.min.js"></script>
+		<script src="lib/player.js"></script>
+
+		<style>
+
+			html,
+			body {
+
+				margin: 0;
+				padding: 0;
+
+			}
+
+		</style>
+
+	</head>
+
+	<body>
+
+		<h1>Title</h1>
+
+		<div id="player"></div>
+
+		<script>
+
+			new DreamPlayer({
+			
+			    cible: document.getElementById("player"),
+			    poster: "http://stor1.dreamvids.fr/uploads/c_tx7Y/WDhaFK.png?1415380828",
+			
+			    source: 0,
+			    volume: 1,
+			    	
+			    sources: [
+			
+			        {
+			
+			            format: 360,
+			            text: "SD",
+			            mp4: "http://stor1.dreamvids.fr/uploads/c_tx7Y/WDhaFK.mp4_640x360p.mp4",
+			            webm: "http://stor1.dreamvids.fr/uploads/c_tx7Y/WDhaFK.mp4_640x360p.webm"
+			
+			        },
+			
+			        {
+			
+			            format: 720,
+			            text: "HD",
+			            mp4: "http://stor1.dreamvids.fr/uploads/c_tx7Y/WDhaFK.mp4_1280x720p.mp4",
+			            webm: "http://stor1.dreamvids.fr/uploads/c_tx7Y/WDhaFK.mp4_1280x720p.webm"
+			
+			        }
+			
+			    ]
+			
+			});
+
+		</script>
+
+	</body>
+
+</html>

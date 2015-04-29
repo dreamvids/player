@@ -1,0 +1,8 @@
+.player {
+
+	max-width: 100%;
+
+	bg: $yellow;
+	overflow: auto;
+
+}
