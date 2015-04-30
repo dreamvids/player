@@ -15,4 +15,6 @@
 /* COMPONENTS
    ----------------------------- */
 
+@import "../components/Control/style/control.css"; 
 @import "../components/Player/style/player.css"; 
+@import "../components/Playpause/style/playpause.css"; 

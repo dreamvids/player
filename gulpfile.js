@@ -62,7 +62,7 @@ gulp.task("style", function () {
 		}),
 		require("postcss-calc")({ preserve: false }),
 		require("postcss-size"),
-		require("./abreviations.js"),
+		require("./assets/abreviations.js"),
 		require("postcss-will-change"),
 		require("postcss-color-rgba-fallback"),
 		require("postcss-image-set"),

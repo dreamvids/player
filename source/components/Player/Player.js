@@ -2,13 +2,17 @@
 
 var React = require("react");
 
+var Control = require("./../Control");
+
 var Player = React.createClass({
 
-	getInitialState: function() {
+	getInitialState() {
 
 		var data = this.props.data;
 
 		return {
+
+			playing: false,
 
 			poster: data.poster,
 			sources: data.sources,
@@ -19,26 +23,46 @@ var Player = React.createClass({
 
 	},
 
-	render: function() {
+	render() {
 
 		var props = this.props,
 			state = this.state;
 
-		console.log(state.sources);
+		// console.log(state.sources);
 
 		return (
 	
 			<div className="player">
 
 				poster: {state.poster}<br /><br />
-				sources: {JSON.stringify(state.sources)}<br /><br />
 
 				source: {state.source}<br /><br />
 				volume: {state.volume}<br /><br />
 
+				<Control actions={this.getActions()}
+				         playing={state.playing} />
+
 			</div>
 
 		);
+
+	},
+
+	getActions() {
+		return {
+
+			playPause: this.playPause
+
+		};
+	},
+
+	playPause() {
+
+		this.setState({
+
+			playing: !this.state.playing
+
+		});
 
 	}
 

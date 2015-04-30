@@ -1,0 +1,10 @@
+.player__control {
+
+	p: a auto 0 0 0;
+
+	d: f;
+	height: $control-height;
+
+	bg: lime;
+
+}

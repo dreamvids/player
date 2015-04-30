@@ -1,8 +1,14 @@
 .player {
 
+	p: r;
+
+	w: 1280px;
 	max-width: 100%;
+	h: 0;
+	padding-bottom: calc(100% / 16 * 9);
+	margin: auto;
 
 	bg: $yellow;
-	overflow: auto;
+	overflow: hidden;
 
 }

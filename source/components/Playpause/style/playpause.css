@@ -1,0 +1,30 @@
+
+$play-pause-padding: 6px;
+
+$play-pause-src: assets/icons/play-pause.png;
+
+.player__control__play-pause {
+
+	size: $control-height;
+
+	background: blue;
+	cursor: pointer;
+
+}
+
+.player__control__play-pause__icon {
+
+	size: calc($control-height - $play-pause-padding * 2);
+	margin: $play-pause-padding;
+
+	background-image: inline($play-pause-src);
+	background-size: calc(($control-height - $play-pause-padding * 2) * 2) calc($control-height - $play-pause-padding * 2);
+	background-repeat: no-repeat;
+
+}
+
+.player__control__play-pause--paused .player__control__play-pause__icon {
+
+	background-position: -calc($control-height - $play-pause-padding * 2) 0;
+
+}

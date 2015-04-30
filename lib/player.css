@@ -16,11 +16,67 @@
 /* COMPONENTS
    ----------------------------- */
 
+.player__control {
+
+	position: absolute;
+
+	top: auto;
+
+	right: 0;
+
+	bottom: 0;
+
+	left: 0;
+
+	display: -webkit-flex;
+
+	display: flex;
+	height: 48px;
+
+	background: lime;
+
+} 
 .player {
 
+	position: relative;
+
+	width: 1280px;
 	max-width: 100%;
+	height: 0;
+	padding-bottom: 56.25%;
+	margin: auto;
 
 	background: #ffeb3b;
-	overflow: auto;
+	overflow: hidden;
+
+}
+
+.player__control__play-pause {
+
+	width: 48px;
+
+	height: 48px;
+
+	background: blue;
+	cursor: pointer;
+
+}
+
+.player__control__play-pause__icon {
+
+	width: 36px;
+
+	height: 36px;
+	margin: 6px;
+
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMAAAABgCAYAAABLwH3pAAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3wQeBzscRwYnxAAAARJJREFUeNrt3UGKhEAQRNHKwvtfudwLggvR1HjvAgNO/El70zMGAAAAAAAAAAAAAAAAAAAAAECutdbyFOik3gqgqsrjJzYAIdDB9FqEC9Bk7K5Bvz88d/1Onv55n7kAx4fkIhAbgNciBOAaIAAhIACvRQjANUAAQkAAXosQgGuAAISAAISAAHw+QACuAQIQAgLwWoQAXAMEIAQE4LUIAbgGCEAICMBrEQK4wrdT5Ng8AsMXgOEbvgAMHwEYPgIwfFJM48cFMHwEYPgIwPARgOHjQ7Dx4wIYPgIwfARg+AjA8BGA4fMf0/hxAQyfUG3+UbbhE3kBDJ/IAAyfOL5uBAAAAAAAAAAAAAAAAAAAAAAAgDM7b4iwOXwOLf4AAAAASUVORK5CYII=);
+	background-size: 72px 36px;
+	background-repeat: no-repeat;
+
+}
+
+.player__control__play-pause--paused .player__control__play-pause__icon {
+
+	background-position: -36px 0;
 
 } 
