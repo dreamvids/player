@@ -2,6 +2,8 @@
 
 var React = require("react");
 
+var on = require("./../../core/on");
+
 var Control = require("./../Control");
 
 var Player = React.createClass({
@@ -12,7 +14,11 @@ var Player = React.createClass({
 
 		return {
 
+			height: 0,
+
 			playing: false,
+			currentTime: 0,
+			duration: 0,
 
 			poster: data.poster,
 			sources: data.sources,
@@ -28,11 +34,15 @@ var Player = React.createClass({
 		var props = this.props,
 			state = this.state;
 
-		// console.log(state.sources);
+		var style = {
+
+			height: state.height + "px"
+
+		};
 
 		return (
 	
-			<div className="player">
+			<div className="player" style={style}>
 
 				poster: {state.poster}<br /><br />
 
@@ -40,11 +50,53 @@ var Player = React.createClass({
 				volume: {state.volume}<br /><br />
 
 				<Control actions={this.getActions()}
-				         playing={state.playing} />
+				         playing={state.playing}
+				         currentTime={state.currentTime}
+				         duration={state.duration} />
 
 			</div>
 
 		);
+
+	},
+
+	componentDidMount: function() {
+
+		this.setHeight();
+
+		if (typeof window.addEventListener !== "undefined") {
+
+			window.addEventListener("resize", this.setHeight);
+
+		}
+
+	},
+
+	componentWillUnmount: function() {
+
+		if (typeof window.removeEventListener !== "undefined") {
+
+			window.removeEventListener("resize", this.setHeight);
+
+		}
+
+	},
+
+	setHeight: function() {
+
+		var state = this.state;
+
+		var newHeight = Math.round(this.getDOMNode().offsetWidth / 16 * 9);
+
+		if (state.height !== newHeight) {
+
+			this.setState({
+
+				height: newHeight
+
+			});
+
+		}
 
 	},
 

@@ -7,7 +7,7 @@ $play-pause-src: assets/icons/play-pause.png;
 
 	size: $control-height;
 
-	background: blue;
+	background: $primary;
 	cursor: pointer;
 
 }

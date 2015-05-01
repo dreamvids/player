@@ -2,13 +2,13 @@
 
 	p: r;
 
-	w: 1280px;
-	max-width: 100%;
+	w: 100%;
+	max-width: 1280px;
 	h: 0;
-	padding-bottom: calc(100% / 16 * 9);
 	margin: auto;
 
-	bg: $yellow;
+	bg: black;
+	color: white;
 	overflow: hidden;
 
 }

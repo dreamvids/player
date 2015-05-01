@@ -5,6 +5,6 @@
 	d: f;
 	height: $control-height;
 
-	bg: lime;
+	bg: color($gray a(50%));
 
 }
