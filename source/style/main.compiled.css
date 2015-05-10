@@ -15,7 +15,8 @@
 /* COMPONENTS
    ----------------------------- */
 
-@import "../components/Player/style/player.css"; 
 @import "../components/Control/style/control.css"; 
+@import "../components/Player/style/player.css"; 
 @import "../components/Time/style/time.css"; 
 @import "../components/Playpause/style/playpause.css"; 
+@import "../components/TimeLine/style/time-line.css"; 

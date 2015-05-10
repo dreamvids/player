@@ -21,5 +21,4 @@ window.DreamPlayer = function(data) {
 
 	}
 
-
 };

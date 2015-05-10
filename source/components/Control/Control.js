@@ -3,6 +3,7 @@
 var React = require("react");
 
 var PlayPause = require("./../PlayPause");
+var TimeLine = require("./../TimeLine");
 var Time = require("./../Time");
 
 var Control = React.createClass({
@@ -21,6 +22,8 @@ var Control = React.createClass({
 				           playing={props.playing} />
 
 				<Time>{props.currentTime}</Time>
+
+				<TimeLine actions={props.actions} />
 
 				<Time>{props.duration}</Time>
 
