@@ -782,6 +782,34 @@ DreamPlayer.prototype.toggleFullscreen = function() {
 
 		this.removeClass("fullscreen");
 
+		setTimeout(function() {
+
+			if ("orientation" in screen) {
+
+				screen.orientation.unlock();
+
+			}
+
+			else if (screen.unLockOrientation) {
+
+				screen.unLockOrientation();
+
+			}
+
+			else if (screen.mozUnLockOrientation) {
+
+				screen.mozUnLockOrientation();
+				
+			}
+
+			else if (screen.msUnLockOrientation) {
+
+				screen.msUnLockOrientation();
+				
+			}
+		
+		}, 1);
+
 	}
 
 	else {
@@ -828,6 +856,34 @@ DreamPlayer.prototype.toggleFullscreen = function() {
 
 		}
 
+		setTimeout(function() {
+
+			if ("orientation" in screen) {
+
+				screen.orientation.lock("landscape");
+
+			}
+
+			else if (screen.lockOrientation) {
+
+				screen.lockOrientation("landscape");
+
+			}
+
+			else if (screen.mozLockOrientation) {
+
+				screen.mozLockOrientation("landscape");
+				
+			}
+
+			else if (screen.msLockOrientation) {
+
+				screen.msLockOrientation("landscape");
+				
+			}
+		
+		}, 1);
+
 	}
 
 }
@@ -843,6 +899,30 @@ DreamPlayer.prototype.fullscreenChange = function(player) {
 	else {
 
 		this.removeClass("fullscreen");
+
+		if ("orientation" in screen) {
+
+			screen.orientation.unlock();
+
+		}
+
+		else if (screen.unLockOrientation) {
+
+			screen.unLockOrientation();
+
+		}
+
+		else if (screen.mozUnLockOrientation) {
+
+			screen.mozUnLockOrientation();
+			
+		}
+
+		else if (screen.msUnLockOrientation) {
+
+			screen.msUnLockOrientation();
+			
+		}
 
 	}
 
