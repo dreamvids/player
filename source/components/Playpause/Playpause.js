@@ -3,7 +3,7 @@
 var React = require("react");
 var cx = React.addons.classSet;
 
-var Playpause = React.createClass({
+var PlayPause = React.createClass({
 
 	render() {
 
@@ -34,4 +34,4 @@ var Playpause = React.createClass({
 
 });
 
-module.exports = Playpause;
+module.exports = PlayPause;

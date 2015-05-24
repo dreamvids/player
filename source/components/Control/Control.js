@@ -5,6 +5,7 @@ var React = require("react");
 var PlayPause = require("./../PlayPause");
 var TimeLine = require("./../TimeLine");
 var Time = require("./../Time");
+var Fullscreen = require("./../Fullscreen");
 
 var Control = React.createClass({
 
@@ -26,6 +27,8 @@ var Control = React.createClass({
 				<TimeLine actions={props.actions} />
 
 				<Time>{props.duration}</Time>
+
+				<Fullscreen actions={props.actions} />
 
 			</div>
 

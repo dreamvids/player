@@ -11,4 +11,6 @@
 	color: white;
 	overflow: hidden;
 
+	@mixin background-cover;
+
 }

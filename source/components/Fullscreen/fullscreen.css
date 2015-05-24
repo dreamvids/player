@@ -1,0 +1,23 @@
+
+$fullscreen-padding: 12px;
+
+$fullscreen-src: assets/icons/fullscreen.png;
+
+.player__control__fullscreen {
+
+	size: $control-height;
+
+	cursor: pointer;
+
+}
+
+.player__control__fullscreen__icon {
+
+	size: calc($control-height - $fullscreen-padding * 2);
+	margin: $fullscreen-padding;
+
+	background-image: inline($fullscreen-src);
+	background-size: calc($control-height - $fullscreen-padding * 2);
+	background-repeat: no-repeat;
+
+}

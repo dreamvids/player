@@ -17,7 +17,7 @@ window.DreamPlayer = function(data) {
 
 	else {
 
-		error("Aucune cible n'a été défini pour le player")
+		error("Aucune cible n'a été défini pour le player");
 
 	}
 

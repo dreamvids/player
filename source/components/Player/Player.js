@@ -36,15 +36,14 @@ var Player = React.createClass({
 
 		var style = {
 
-			height: state.height + "px"
-
+			height: `${state.height}px`,
+			backgroundImage: `url(${state.poster})`
+		
 		};
 
 		return (
 	
 			<div className="player" style={style}>
-
-				poster: {state.poster}<br /><br />
 
 				source: {state.source}<br /><br />
 				volume: {state.volume}<br /><br />
