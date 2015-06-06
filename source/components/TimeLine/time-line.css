@@ -30,12 +30,26 @@ $player-slider-size: 10px;
 
 }
 
+.player__control__time-line__slider__current,
+.player__control__time-line__slider__buffer {
+
+	p: a 0 auto;
+
+}
+
 .player__control__time-line__slider__current {
 
-	height: 100%;
+	z-index: 2;
 
 	bg: $primary;
 	border-radius: calc($player-slider-size / 2) 0 0 calc($player-slider-size / 2);
+
+}
+
+.player__control__time-line__slider__buffer {
+
+	bg: #cdcdcd;
+	border-radius: calc($player-slider-size / 2);
 
 }
 
@@ -47,6 +61,7 @@ $player-slider-cursor-height: 4px;
 
 	p: a;
 	top: 0;
+	z-index: 3;
 
 	width: $player-slider-cursor-large;
 	height: calc($player-slider-size + $player-slider-cursor-height * 2);

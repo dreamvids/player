@@ -23,7 +23,7 @@ $play-pause-src: assets/icons/play-pause.png;
 
 }
 
-.player__control__play-pause--paused .player__control__play-pause__icon {
+.player__control__play-pause--playing .player__control__play-pause__icon {
 
 	background-position: -calc($control-height - $play-pause-padding * 2) 0;
 

@@ -24,7 +24,15 @@ var Control = React.createClass({
 
 				<Time>{props.currentTime}</Time>
 
-				<TimeLine actions={props.actions} />
+				<TimeLine actions={props.actions}
+
+				          currentTime={props.currentTime}
+				          duration={props.duration}
+				          buffer={props.buffer}
+
+				          dragging={props.dragging}
+				          dragFrom={props.dragFrom}
+				          dragDeplacement={props.dragDeplacement} />
 
 				<Time>{props.duration}</Time>
 

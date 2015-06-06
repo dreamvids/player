@@ -12,13 +12,13 @@ var PlayPause = React.createClass({
 		var className = cx({
 
 			"player__control__play-pause": true,
-			"player__control__play-pause--paused": !props.playing
+			"player__control__play-pause--playing": props.playing
 
 		});
 
 		return (
 	
-			<div className={className} onClick={this.handleClick}>
+			<div className={className} onMouseDown={this.handleMouseDown}>
 				<div className="player__control__play-pause__icon"></div>
 			</div>
 
@@ -26,7 +26,7 @@ var PlayPause = React.createClass({
 
 	},
 
-	handleClick() {
+	handleMouseDown() {
 
 		this.props.actions.playPause();
 
