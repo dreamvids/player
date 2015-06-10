@@ -10,6 +10,7 @@
 	bg: black;
 	color: white;
 	overflow: hidden;
+	user-select: none;
 
 	@mixin background-cover;
 
@@ -17,7 +18,15 @@
 
 .player video {
 
-	width: 100%;
-	height: 100%;
+	p: a;
+
+	size: 100%;
+
+}
+
+.player--fullscreen {
+
+	size: 100%;
+	max-width: 100%;
 
 }

@@ -26,11 +26,11 @@ var TimeLine = React.createClass({
 
 		return (
 	
-			<div className="player__control__time-line">
+			<div className="player__control__time-line"
+			     ref="slider">
 
 				<div className="player__control__time-line__slider"
-				     onMouseDown={this.handleMouseDown}
-				     ref="slider">
+				     onMouseDown={this.handleMouseDown} >
 
 					<div className="player__control__time-line__slider__wrap">
 
@@ -66,7 +66,7 @@ var TimeLine = React.createClass({
 
 		var slider = this.refs.slider.getDOMNode();
 
-		actions.seekTo((event.clientX - offset(slider).left) / slider.offsetWidth * props.duration);
+		actions.seekTo(Math.max((event.clientX - offset(slider).left) / slider.offsetWidth * props.duration), 0);
 
 		this.props.actions.dragControl("time", event);
 
@@ -79,7 +79,7 @@ var TimeLine = React.createClass({
 
 		var slider = this.refs.slider.getDOMNode();
 
-		actions.seekTo((event.clientX - offset(slider).left) / slider.offsetWidth * props.duration);
+		actions.seekTo(Math.max((event.clientX - offset(slider).left) / slider.offsetWidth * props.duration), 0);
 
 	}
 

@@ -67,6 +67,12 @@ function videoEvents(eventName) {
 
 		break;
 
+		case "dblclick":
+
+			actions.toggleFullscreen();
+
+		break;
+
 	}
 
 }

@@ -15,6 +15,16 @@ var Control = React.createClass({
 
 		var time = 1000;
 
+		var currentTime = props.currentTime;
+
+		if (props.dragging === "time") {
+
+			var sliderWidth = this.refs.slider.getDOMNode().offsetWidth;
+
+			currentTime = Math.round(Math.max(Math.min(props.currentTime / props.duration + props.dragDeplacement / sliderWidth, 1), 0) * props.duration) || 0;
+
+		}
+
 		return (
 	
 			<div className="player__control">
@@ -22,9 +32,10 @@ var Control = React.createClass({
 				<PlayPause actions={props.actions}
 				           playing={props.playing} />
 
-				<Time>{props.currentTime}</Time>
+				<Time>{currentTime}</Time>
 
-				<TimeLine actions={props.actions}
+				<TimeLine ref="slider"
+				          actions={props.actions}
 
 				          currentTime={props.currentTime}
 				          duration={props.duration}
@@ -36,7 +47,8 @@ var Control = React.createClass({
 
 				<Time>{props.duration}</Time>
 
-				<Fullscreen actions={props.actions} />
+				<Fullscreen fullscreen={props.fullscreen}
+				            actions={props.actions} />
 
 			</div>
 

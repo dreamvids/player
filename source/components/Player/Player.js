@@ -1,6 +1,7 @@
 "use strict";
 
 var React = require("react");
+var cx = React.addons.classSet;
 
 var on = require("../../core/on.js");
 
@@ -16,6 +17,7 @@ var Player = React.createClass({
 
 			height: 0,
 
+			fullscreen: false,
 			playing: false,
 			currentTime: 0,
 			duration: 0,
@@ -49,9 +51,16 @@ var Player = React.createClass({
 		
 		};
 
+		var classes = cx({
+
+			"player": true,
+			"player--fullscreen": state.fullscreen
+
+		});
+
 		return (
 	
-			<div className="player"
+			<div className={classes}
 			     style={style}
 
 			     onMouseUp={actions.dragControl.bind(this, "time")}
@@ -65,6 +74,7 @@ var Player = React.createClass({
 				<Control actions={actions}
 
 				         playing={state.playing}
+				         fullscreen={state.fullscreen}
 
 				         currentTime={state.currentTime}
 				         duration={state.duration}
@@ -101,7 +111,8 @@ var Player = React.createClass({
 			"pause",
 			"durationchange",
 			"timeupdate",
-			"loadedmetadata"
+			"loadedmetadata",
+			"dblclick"
 		];
 
 		for (var i = 0, length = events.length; i < length; i++) {
@@ -116,6 +127,10 @@ var Player = React.createClass({
 		if (typeof window.addEventListener !== "undefined") {
 
 			window.addEventListener("resize", actions.setHeight);
+
+			window.addEventListener("webkitfullscreenchange", actions.fullscreenChange);
+			window.addEventListener(   "mozfullscreenchange", actions.fullscreenChange);
+			window.addEventListener(      "fullscreenchange", actions.fullscreenChange);
 
 		}
 
@@ -151,7 +166,10 @@ var Player = React.createClass({
 			dragControl: require("./actions/dragControl.js").bind(this),
 			onDraggerDrop: require("./actions/onDraggerDrop.js").bind(this),
 
-			videoEvents: require("./actions/videoEvents.js").bind(this)
+			videoEvents: require("./actions/videoEvents.js").bind(this),
+
+			toggleFullscreen: require("./actions/toggleFullscreen.js").bind(this),
+			fullscreenChange: require("./actions/fullscreenChange.js").bind(this)
 
 		};
 	}

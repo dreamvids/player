@@ -17,7 +17,13 @@ $fullscreen-src: assets/icons/fullscreen.png;
 	margin: $fullscreen-padding;
 
 	background-image: inline($fullscreen-src);
-	background-size: calc($control-height - $fullscreen-padding * 2);
+	background-size: calc(($control-height - $fullscreen-padding * 2) * 2) calc($control-height - $fullscreen-padding * 2);
 	background-repeat: no-repeat;
+
+}
+
+.player__control__fullscreen--is-fullscreen .player__control__fullscreen__icon {
+
+	background-position: -calc($control-height - $fullscreen-padding * 2) 0;
 
 }
