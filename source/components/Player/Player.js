@@ -31,7 +31,9 @@ var Player = React.createClass({
 			dragging: null,
 			dragFrom: 0,
 			dragDeplacement: 0,
-			dropFunctions: {}
+			dropFunctions: {},
+
+			controlVisible: true
 
 		};
 
@@ -64,7 +66,7 @@ var Player = React.createClass({
 			     style={style}
 
 			     onMouseUp={actions.dragControl.bind(this, "time")}
-			     onMouseMove={actions.dragControl.bind(this, "time")}>
+			     onMouseMove={this.onMouseMove}>
 
 				<video ref="video" onClick={this.handleVideoClick}>
 					<source src={source.mp4} type="video/mp4" />
@@ -72,6 +74,8 @@ var Player = React.createClass({
 				</video>
 
 				<Control actions={actions}
+
+				         visible={state.controlVisible}
 
 				         playing={state.playing}
 				         fullscreen={state.fullscreen}
@@ -123,6 +127,7 @@ var Player = React.createClass({
 
 
 		actions.setHeight();
+		actions.hideControlTimeout();
 
 		if (typeof window.addEventListener !== "undefined") {
 
@@ -154,6 +159,13 @@ var Player = React.createClass({
 
 	},
 
+	onMouseMove(event) {
+
+		this.getActions().hideControlTimeout();
+		this.getActions().dragControl("time", event);
+
+	},
+
 	getActions() {
 		return {
 
@@ -165,6 +177,9 @@ var Player = React.createClass({
 
 			dragControl: require("./actions/dragControl.js").bind(this),
 			onDraggerDrop: require("./actions/onDraggerDrop.js").bind(this),
+			hideControlTimeout: require("./actions/hideControlTimeout.js").bind(this),
+			hideControl: require("./actions/hideControl.js").bind(this),
+			showControl: require("./actions/showControl.js").bind(this),
 
 			videoEvents: require("./actions/videoEvents.js").bind(this),
 

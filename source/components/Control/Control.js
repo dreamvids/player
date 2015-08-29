@@ -13,6 +13,12 @@ var Control = React.createClass({
 
 		var props = this.props;
 
+		var className = "player__control";
+
+		if (!props.visible) {
+			className += " player__control--hide";
+		}
+
 		var time = 1000;
 
 		var currentTime = props.currentTime;
@@ -27,7 +33,10 @@ var Control = React.createClass({
 
 		return (
 	
-			<div className="player__control">
+			<div className={className}
+			     onMouseMove={this.hideControlTimeout}
+			     onMouseDown={this.hideControlTimeout}
+			     onMouseUp={this.hideControlTimeout}>
 
 				<PlayPause actions={props.actions}
 				           playing={props.playing} />
@@ -54,7 +63,13 @@ var Control = React.createClass({
 
 		);
 
-	}
+	},
+
+	hideControlTimeout() {
+
+		this.props.actions.hideControlTimeout();
+
+	}  
 
 });
 

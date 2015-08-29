@@ -7,4 +7,14 @@
 
 	bg: color($gray a(60%));
 
+	transition: .1s;
+
+}
+
+.player__control--hide {
+
+	opacity: 0;
+	transform: translateY(6px);
+	transition: .4s;
+
 }

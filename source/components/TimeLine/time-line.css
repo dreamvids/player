@@ -24,7 +24,7 @@ $player-slider-size: 10px;
 	width: 100%;
 	height: $player-slider-size;
 
-	bg: white;
+	bg: color(white a(.3));
 	border-radius: calc($player-slider-size / 2);
 	cursor: pointer;
 

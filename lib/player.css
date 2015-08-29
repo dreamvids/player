@@ -35,6 +35,19 @@
 
 	background: rgba(47, 47, 47, 0.6);
 
+	transition: .1s;
+
+}
+
+.player__control--hide {
+
+	opacity: 0;
+
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	-webkit-transform: translateY(6px);
+	        transform: translateY(6px);
+	transition: .4s;
+
 }
 
 .player__control__fullscreen {
@@ -173,7 +186,7 @@
 	width: 100%;
 	height: 10px;
 
-	background: white;
+	background: rgba(255, 255, 255, 0.3);
 	border-radius: 5px;
 	cursor: pointer;
 
