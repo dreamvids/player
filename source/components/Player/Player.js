@@ -80,6 +80,9 @@ var Player = React.createClass({
 				         playing={state.playing}
 				         fullscreen={state.fullscreen}
 
+				         sources={state.sources}
+				         source={state.source}
+
 				         currentTime={state.currentTime}
 				         duration={state.duration}
 				         buffer={state.buffer}
@@ -108,7 +111,6 @@ var Player = React.createClass({
 		video.volume = state.volume;
 
 		video.play();
-
 
 		var events = [
 			"play",
@@ -174,6 +176,8 @@ var Player = React.createClass({
 			playPause: require("./actions/playPause.js").bind(this),
 			seekTo: require("./actions/seekTo.js").bind(this),
 			updateBuffer: require("./actions/updateBuffer.js").bind(this),
+			
+			setSource: require("./actions/setSource.js").bind(this),
 
 			dragControl: require("./actions/dragControl.js").bind(this),
 			onDraggerDrop: require("./actions/onDraggerDrop.js").bind(this),

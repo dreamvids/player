@@ -1,0 +1,86 @@
+.player__control__quality {
+
+	position: relative;
+
+	size: auto $control-height;
+	padding: 12px 4px;
+
+	font-family: sans-serif;
+	font-size: 18px;
+	letter-spacing: 2px;
+
+	cursor: pointer;
+	transition: color, .15s;
+
+}
+
+.player__control__quality--is-hd {
+
+	color: $primary;
+
+}
+
+
+.player__control__quality__menu {
+
+	position: absolute;
+	left: 50%;
+	right: 0;
+	bottom: 100%;
+
+	width: 54px;
+	padding: 5px 0;
+
+	font-size: 14px;
+	color: black;
+	text-align: center;
+	background: white;
+	border-radius: 3px;
+	opacity: 0;
+	transition: .15s;
+
+	transform: translateX(-50%) translateY(8px);
+
+	&::after {
+
+		position: absolute;
+		top: 100%;
+		left: 50%;
+
+		content: "";
+		display: block;
+		size: 0;
+
+		border-style: solid;
+		border-width: 7px 7px 0 7px;
+		border-color: white transparent transparent transparent;
+
+		transform: translateX(-50%);
+
+	}
+
+}
+
+.player__control__quality--open .player__control__quality__menu {
+
+	opacity: 1;
+
+	transform: translateX(-50%) translateY(2px);
+
+}
+
+.player__control__quality__menu div {
+
+	padding: 2px 0;
+
+	cursor: pointer;
+	transition: .15s;
+
+	&.-active {
+
+		background: $primary;
+		color: white;
+
+	}
+
+}
