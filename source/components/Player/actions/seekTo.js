@@ -3,6 +3,7 @@
 function seekTo(time) {
 
 	var state = this.state;
+	var actions = this.getActions();
 
 	var video = this.refs.video.getDOMNode();
 
@@ -13,6 +14,8 @@ function seekTo(time) {
 		currentTime: time
 
 	});
+	
+	actions.cancelRedirectingInterval();
 
 }
 

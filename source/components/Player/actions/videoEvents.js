@@ -11,6 +11,8 @@ function videoEvents(eventName) {
 
 		case "play":
 
+			actions.cancelRedirectingInterval();
+
 			if (state.playing !== true) {
 				this.setState({
 
@@ -70,6 +72,12 @@ function videoEvents(eventName) {
 		case "dblclick":
 
 			actions.toggleFullscreen();
+
+		break;
+
+		case "ended":
+
+			actions.onEnd();
 
 		break;
 

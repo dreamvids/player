@@ -1,5 +1,7 @@
 "use strict";
 
+var marmottajax = require("marmottajax");
+
 function setSource(source) {
 
 	var state = this.state;
@@ -24,6 +26,17 @@ function setSource(source) {
 			}
 
 		}.bind(this), 200);
+
+		marmottajax({
+
+			url: _webroot_ + "account/definition",
+			method: "put",
+
+			parameters: {
+			    definition: source
+			}
+
+		});
 
 	}
 

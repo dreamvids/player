@@ -6,6 +6,7 @@ var cx = React.addons.classSet;
 var on = require("../../core/on.js");
 
 var Control = require("../Control");
+var Redirecting = require("../Redirecting");
 
 var Player = React.createClass({
 
@@ -27,6 +28,11 @@ var Player = React.createClass({
 			sources: data.sources,
 			source: data.source,
 			volume: data.volume,
+
+			redirecting: false,
+			redirectingTime: null,
+			redirectAtEnd: data.redirectAtEnd || null,
+			redirectingInterval: null,
 
 			dragging: null,
 			dragFrom: 0,
@@ -52,6 +58,17 @@ var Player = React.createClass({
 			height: `${state.height}px`
 		
 		};
+
+		var redirecting;
+
+		if (state.redirecting) {
+
+			redirecting = <Redirecting actions={actions}
+
+			                           href={state.redirectAtEnd}
+			                           time={state.redirectingTime} />
+
+		}
 
 		var classes = cx({
 
@@ -91,6 +108,8 @@ var Player = React.createClass({
 				         dragFrom={state.dragFrom}
 				         dragDeplacement={state.dragDeplacement} />
 
+				{redirecting}
+
 			</div>
 
 		);
@@ -118,7 +137,8 @@ var Player = React.createClass({
 			"durationchange",
 			"timeupdate",
 			"loadedmetadata",
-			"dblclick"
+			"dblclick",
+			"ended"
 		];
 
 		for (var i = 0, length = events.length; i < length; i++) {
@@ -178,6 +198,10 @@ var Player = React.createClass({
 			updateBuffer: require("./actions/updateBuffer.js").bind(this),
 			
 			setSource: require("./actions/setSource.js").bind(this),
+
+			onEnd: require("./actions/onEnd.js").bind(this),
+			redirectingInterval: require("./actions/redirectingInterval.js").bind(this),
+			cancelRedirectingInterval: require("./actions/cancelRedirectingInterval.js").bind(this),
 
 			dragControl: require("./actions/dragControl.js").bind(this),
 			onDraggerDrop: require("./actions/onDraggerDrop.js").bind(this),

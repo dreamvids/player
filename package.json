@@ -40,6 +40,7 @@
     "gulp-util": "^3.0.4",
     "gulp-watch": "^4.2.4",
     "jsx-loader": "^0.13.1",
+    "marmottajax": "^2.0.2",
     "postcss": "^4.1.6",
     "postcss-assets": "^2.1.0",
     "postcss-calc": "^4.0.1",

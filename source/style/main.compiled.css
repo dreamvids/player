@@ -17,8 +17,9 @@
 
 @import "../components/Control/control.css"; 
 @import "../components/Fullscreen/fullscreen.css"; 
-@import "../components/PlayPause/playpause.css"; 
 @import "../components/Player/player.css"; 
+@import "../components/PlayPause/playpause.css"; 
 @import "../components/Quality/quality.css"; 
+@import "../components/Redirecting/redirecting.css"; 
 @import "../components/Time/time.css"; 
 @import "../components/TimeLine/time-line.css"; 
